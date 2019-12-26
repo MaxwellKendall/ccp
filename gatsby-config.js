@@ -1,3 +1,4 @@
+const path = require("path");
 require('dotenv').config();
 
 const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID } = process.env;
@@ -9,7 +10,13 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
-    `gatsby-source-google-calendar`,
+    {
+      resolve: `gatsby-source-google-calendar`,
+      options: {
+        pemFilePath: path.join(__dirname, "./pem/ccp_calendar_key.json"),
+        calendarId: 'info@ckendallart.com'
+      }
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
