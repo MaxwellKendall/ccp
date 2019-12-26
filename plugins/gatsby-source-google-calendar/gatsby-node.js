@@ -2,10 +2,20 @@ const { google } = require('googleapis');
 const moment = require('moment');
 
 const defaultFieldsToInclude = ['start', 'end', 'summary', 'status', 'organizer'];
+const requiredFields = ['id', 'internal'];
 
-const processEvents = (event) => ({
-
-});
+const processEvents = (event, fieldsToInclude = defaultFieldsToInclude) => {
+    return Object.keys(event)
+        .reduce((acc, key) => {
+            if (fieldsToInclude.concat(requiredFields).includes(key)) {
+                return {
+                    ...acc,
+                    [key]: event[key]
+                };
+            }
+            return acc;
+        }, {});
+}
 
 const scopes = [
     `https://www.googleapis.com/auth/calendar.events.readonly`,
@@ -38,20 +48,11 @@ exports.sourceNodes = async ({ actions }) => {
         timeMin: moment().format(), // only events after today
         timeMax: moment().add(2, 'y').format() // only events two years from now
      });
-
-    items.forEach((item) => {
-        if (item.hasOwnProperty('start')) {
-            // console.log("keys", Object.keys(item));
-            console.log(item.summary);
-            console.log(item.sequence);
-            console.log(item.status);
-            console.log("start date", item.start.date);
-            console.log("end date", item.end.date);
-        }
-    })
   
     // Process data into nodes.
-    items.forEach(event => createNode(processEvents(event)))
+    items
+        .map(item => ({ ...item, internal: { contentDigest: item.updated, type: 'GoogleCalendarEvent' }}))
+        .forEach(event => createNode(processEvents(event)))
   
     // We're done, return.
     return
