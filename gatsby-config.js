@@ -1,7 +1,6 @@
-const path = require("path");
 require('dotenv').config();
 
-const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY } = process.env;
+const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY, SERMON_AUDIO_API_KEY } = process.env;
 
 module.exports = {
   siteMetadata: {
@@ -10,6 +9,12 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    {
+      resolve: `gatsby-source-sermon-audio`,
+      options: {
+        apiKey: SERMON_AUDIO_API_KEY,
+      }
+    },
     {
       resolve: `gatsby-source-google-calendar-events`,
       options: {
