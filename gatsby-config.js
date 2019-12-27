@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-source-google-calendar`,
+      resolve: `gatsby-source-google-calendar-events`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         calendarId: 'info@ckendallart.com'
