@@ -1,7 +1,7 @@
 const path = require("path");
 require('dotenv').config();
 
-const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID } = process.env;
+const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY } = process.env;
 
 module.exports = {
   siteMetadata: {
@@ -13,7 +13,7 @@ module.exports = {
     {
       resolve: `gatsby-source-google-calendar`,
       options: {
-        pemFilePath: path.join(__dirname, "./pem/ccp_calendar_key.json"),
+        envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         calendarId: 'info@ckendallart.com'
       }
     },
