@@ -4,7 +4,6 @@ import { graphql } from "gatsby"
 
 export default ({ data }) => {
   const sermon = data.allSermon.edges[0].node;
-  console.log("sermon", sermon)
   return (
     <Layout>
       <div>
