@@ -1,14 +1,9 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
 const path = require(`path`)
 
 exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
+  
+  // create blog post pages
   return graphql(`
     {
       allWordpressPost(sort: { fields: [date] }) {
@@ -21,19 +16,60 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
+      allSermon(filter: {}, sort: {fields: preachDate, order: DESC}) {
+        edges {
+          node {
+            preachDate
+            bibleText
+            downloadCount
+            series {
+              title
+              count
+            }
+            slug
+            fullTitle
+            speaker {
+              bio
+              displayName
+              portraitURL
+              roundedThumbnailImageURL
+            }
+            media {
+              audio {
+                streamURL
+                mediaType
+                duration
+                downloadURL
+              }
+            }
+            id
+          }
+        }
+      }
     }
   `).then(result => {
-    console.log(JSON.stringify(result, null, 4))
     result.data.allWordpressPost.edges.forEach(({ node }) => {
         createPage({
-          path: node.slug,
+          path: `blog/${node.slug}`,
           component: path.resolve(`./src/templates/blog-post.js`),
           context: {
             // This is the $slug variable
             // passed to blog-post.js
             slug: node.slug,
-          },
-        })
+          }
+        });
       });
+    result.data.allSermon.edges.forEach(({ node }) => {
+      console.log("node path", Object.keys(node));
+      createPage({
+        path: `sermons/${node.slug}`,
+        component: path.resolve(`./src/templates/sermon.js`),
+        context: {
+          // This is the $slug variable
+          // passed to blog-post.js
+          id: node.id,
+        }
+      });
+    })
   });
 };

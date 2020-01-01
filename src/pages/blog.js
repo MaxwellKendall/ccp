@@ -6,10 +6,15 @@ import SEO from "../components/seo"
 export default ({ data }) => {
   return (
     <Layout>
-        <SEO title="home" />
-        <h1>CCP v2</h1>
-        <Link to={`blog`}>Go to the Blog</Link>
-        <Link to={`sermons`}>Go to the Sermon Archive</Link>
+      <SEO title="blog" />
+      <h1>My WordPress Blog</h1>
+      <h4>Posts</h4>
+      {data.allWordpressPost.edges.map(({ node }) => (
+        <Link to={`blog/${node.slug}`}>
+          <p>{node.title}</p>
+          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </Link>
+      ))}
     </Layout>
   )
 }
