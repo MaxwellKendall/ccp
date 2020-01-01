@@ -60,7 +60,6 @@ exports.createPages = ({ graphql, actions }) => {
         });
       });
     result.data.allSermon.edges.forEach(({ node }) => {
-      console.log("node path", Object.keys(node));
       createPage({
         path: `sermons/${node.slug}`,
         component: path.resolve(`./src/templates/sermon.js`),
