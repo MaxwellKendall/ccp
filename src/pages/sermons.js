@@ -10,14 +10,16 @@ import Card from "../components/card"
 export default ({ data }) => {
   const getSermonExcerpt = sermon => (
     <React.Fragment>
-      <div className="flex items-center justify-center md:justify-start flex-col md:flex-row">
+      <div className="flex items-center justify-center md:justify-start flex-col md:flex-row pb-2">
         <Img 
           style={{ height: '50px', width: '50px' }}
           fluid={{
             src: sermon.speaker.roundedThumbnailImageURL
           }} />
-        <strong className="pl-2 text-center md:text-left">{`${sermon.speaker.displayName} on ${sermon.bibleText}; preached ${moment(sermon.preachDate).format('LL')}.`}</strong>
+        <strong className="pl-2 text-center md:text-left">{`${sermon.speaker.displayName} on ${sermon.bibleText}; preached ${moment(sermon.preachDate).format('LL')}.`}
+        </strong>
       </div>
+      <span className="italic">{`Downloaded ${sermon.downloadCount} times.`}</span>
     </React.Fragment>
   )
   return (
