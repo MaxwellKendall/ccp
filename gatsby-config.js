@@ -10,6 +10,7 @@ module.exports = {
     author: `Maxwell Kendall`,
   },
   plugins: [
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-sermon-audio`,
       options: {
