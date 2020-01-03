@@ -5,9 +5,9 @@ const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Christ Church Presbyterian, Charleston, SC`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    author: `Maxwell Kendall`,
   },
   plugins: [
     {
@@ -21,6 +21,7 @@ module.exports = {
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         assumedUser: 'info@ckendallart.com',
+        includedFields: ['start', 'end', 'summary', 'status', 'organizer', 'description', 'location', 'slug', 'attachments'],
         calendarId: 'ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com',
         timeMax: moment().add(1, 'y').format(),
         timeMin: moment().subtract(3, 'm').format()

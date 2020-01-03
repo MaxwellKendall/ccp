@@ -46,6 +46,21 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
+      allGoogleCalendarEvent {
+        edges {
+          node {
+            summary
+            id
+            slug
+            start {
+              dateTime
+            }
+            description
+            location
+            status
+          }
+        }
+      }
     }
   `).then(result => {
     result.data.allWordpressPost.edges.forEach(({ node }) => {
@@ -70,5 +85,17 @@ exports.createPages = ({ graphql, actions }) => {
         }
       });
     })
-  });
+    result.data.allGoogleCalendarEvent.edges.forEach(({ node }) => {
+      createPage({
+        path: `events/${node.slug}`,
+        component: path.resolve(`./src/templates/event.js`),
+        context: {
+          // This is the $slug variable
+          // passed to blog-post.js
+          id: node.id,
+        }
+      });
+    });
+  })
+  .catch(e => console.log("error: ", error));
 };
