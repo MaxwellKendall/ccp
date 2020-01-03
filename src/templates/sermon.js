@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
-  const sermon = data.allSermon.edges[0].node;
+  const sermon = data.allSermon.edges[0].node
   return (
     <Layout>
       <div>
@@ -17,34 +17,34 @@ export default ({ data }) => {
 }
 export const query = graphql`
   query($id: String!) {
-    allSermon(filter: {id: {eq: $id}}) {
-        edges {
-          node {
-            preachDate
-            bibleText
-            downloadCount
-            series {
-              title
-              count
-            }
-            fullTitle
-            speaker {
-              bio
-              displayName
-              portraitURL
-              roundedThumbnailImageURL
-            }
-            media {
-              audio {
-                streamURL
-                mediaType
-                duration
-                downloadURL
-              }
-            }
-            id
+    allSermon(filter: { id: { eq: $id } }) {
+      edges {
+        node {
+          preachDate
+          bibleText
+          downloadCount
+          series {
+            title
+            count
           }
+          fullTitle
+          speaker {
+            bio
+            displayName
+            portraitURL
+            roundedThumbnailImageURL
+          }
+          media {
+            audio {
+              streamURL
+              mediaType
+              duration
+              downloadURL
+            }
+          }
+          id
         }
       }
+    }
   }
 `

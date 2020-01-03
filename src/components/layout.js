@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
-import "../styles/index.scss";
+import "../styles/index.scss"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -36,7 +36,8 @@ const Layout = ({ children }) => {
       >
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston SC
+          © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
+          SC
         </footer>
       </div>
     </>

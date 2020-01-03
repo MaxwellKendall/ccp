@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -384,7 +388,7 @@ html {
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
-    margin-bottom: 1.45rem;
+    // margin-bottom: 1.45rem;
   }
   figure {
     margin-left: 0;

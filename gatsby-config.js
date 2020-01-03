@@ -1,7 +1,13 @@
-const moment = require('moment');
-require('dotenv').config();
+const moment = require("moment")
+require("dotenv").config()
 
-const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY, SERMON_AUDIO_API_KEY } = process.env;
+const {
+  WORDPRESS_PASSWORD,
+  WORDPRESS_CLIENT_SECRET,
+  WORDPRESS_CLIENT_ID,
+  GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
+  SERMON_AUDIO_API_KEY,
+} = process.env
 
 module.exports = {
   siteMetadata: {
@@ -10,23 +16,46 @@ module.exports = {
     author: `Maxwell Kendall`,
   },
   plugins: [
-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        postCssPlugins: [
+          require("tailwindcss"),
+          // require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
+        ],
+      },
+    },
     {
       resolve: `gatsby-source-sermon-audio`,
       options: {
         apiKey: SERMON_AUDIO_API_KEY,
-      }
+      },
     },
     {
       resolve: `gatsby-source-google-calendar-events`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
-        assumedUser: 'info@ckendallart.com',
-        includedFields: ['start', 'end', 'summary', 'status', 'organizer', 'description', 'location', 'slug', 'attachments'],
-        calendarId: 'ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com',
-        timeMax: moment().add(1, 'y').format(),
-        timeMin: moment().subtract(3, 'm').format()
-      }
+        assumedUser: "info@ckendallart.com",
+        includedFields: [
+          "start",
+          "end",
+          "summary",
+          "status",
+          "organizer",
+          "description",
+          "location",
+          "slug",
+          "attachments",
+        ],
+        calendarId:
+          "ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com",
+        timeMax: moment()
+          .add(1, "y")
+          .format(),
+        timeMin: moment()
+          .subtract(3, "m")
+          .format(),
+      },
     },
     `gatsby-plugin-react-helmet`,
     {

@@ -2,18 +2,19 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Card from "../components/card"
 
 export default ({ data }) => {
   return (
-    <Layout>
+    <Layout className="mx-auto flex flex-col py-10 px-5">
       <SEO title="blog" />
-      <h1>My WordPress Blog</h1>
-      <h4>Posts</h4>
+      <h1>Doctrine for Life</h1>
       {data.allWordpressPost.edges.map(({ node }) => (
-        <Link to={`blog/${node.slug}`}>
-          <p>{node.title}</p>
-          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-        </Link>
+        <Card
+          title={node.title}
+          slug={`blog/${node.slug}`}
+          element={<div dangerouslySetInnerHTML={{ __html: node.excerpt }} />}
+        />
       ))}
     </Layout>
   )

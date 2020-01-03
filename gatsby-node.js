@@ -1,8 +1,8 @@
 const path = require(`path`)
 
 exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions;
-  
+  const { createPage } = actions
+
   // create blog post pages
   return graphql(`
     {
@@ -16,7 +16,7 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
-      allSermon(filter: {}, sort: {fields: preachDate, order: DESC}) {
+      allSermon(filter: {}, sort: { fields: preachDate, order: DESC }) {
         edges {
           node {
             preachDate
@@ -62,8 +62,9 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    result.data.allWordpressPost.edges.forEach(({ node }) => {
+  `)
+    .then(result => {
+      result.data.allWordpressPost.edges.forEach(({ node }) => {
         createPage({
           path: `blog/${node.slug}`,
           component: path.resolve(`./src/templates/blog-post.js`),
@@ -71,31 +72,31 @@ exports.createPages = ({ graphql, actions }) => {
             // This is the $slug variable
             // passed to blog-post.js
             slug: node.slug,
-          }
-        });
-      });
-    result.data.allSermon.edges.forEach(({ node }) => {
-      createPage({
-        path: `sermons/${node.slug}`,
-        component: path.resolve(`./src/templates/sermon.js`),
-        context: {
-          // This is the $slug variable
-          // passed to blog-post.js
-          id: node.id,
-        }
-      });
+          },
+        })
+      })
+      result.data.allSermon.edges.forEach(({ node }) => {
+        createPage({
+          path: `sermons/${node.slug}`,
+          component: path.resolve(`./src/templates/sermon.js`),
+          context: {
+            // This is the $slug variable
+            // passed to blog-post.js
+            id: node.id,
+          },
+        })
+      })
+      result.data.allGoogleCalendarEvent.edges.forEach(({ node }) => {
+        createPage({
+          path: `events/${node.slug}`,
+          component: path.resolve(`./src/templates/event.js`),
+          context: {
+            // This is the $slug variable
+            // passed to blog-post.js
+            id: node.id,
+          },
+        })
+      })
     })
-    result.data.allGoogleCalendarEvent.edges.forEach(({ node }) => {
-      createPage({
-        path: `events/${node.slug}`,
-        component: path.resolve(`./src/templates/event.js`),
-        context: {
-          // This is the $slug variable
-          // passed to blog-post.js
-          id: node.id,
-        }
-      });
-    });
-  })
-  .catch(e => console.log("error: ", error));
-};
+    .catch(e => console.log("error: ", error))
+}
