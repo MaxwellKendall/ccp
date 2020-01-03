@@ -1,3 +1,4 @@
+const moment = require('moment');
 require('dotenv').config();
 
 const { WORDPRESS_PASSWORD, WORDPRESS_CLIENT_SECRET, WORDPRESS_CLIENT_ID, GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY, SERMON_AUDIO_API_KEY } = process.env;
@@ -20,7 +21,9 @@ module.exports = {
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         assumedUser: 'info@ckendallart.com',
-        calendarId: 'ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com'
+        calendarId: 'ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com',
+        timeMax: moment().add(1, 'y').format(),
+        timeMin: moment().subtract(3, 'm').format()
       }
     },
     `gatsby-plugin-react-helmet`,
