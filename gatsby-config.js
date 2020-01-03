@@ -19,7 +19,8 @@ module.exports = {
       resolve: `gatsby-source-google-calendar-events`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
-        calendarId: 'info@ckendallart.com'
+        assumedUser: 'info@ckendallart.com',
+        calendarId: 'ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com'
       }
     },
     `gatsby-plugin-react-helmet`,
