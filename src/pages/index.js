@@ -11,7 +11,10 @@ export default ({ data }) => {
         <h1>CCP v2</h1>
         <div dangerouslySetInnerHTML={{ __html: wordpressPage.content }} />
         <Link to={`blog`}>Go to the Blog</Link>
+        <br />
         <Link to={`sermons`}>Go to the Sermon Archive</Link>
+        <br />
+        <Link to={`events`}>Go to the Events Page</Link>
     </Layout>
   )
 }
