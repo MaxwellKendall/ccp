@@ -2,14 +2,14 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Image from "../components/image"
 
 export default ({ data }) => {
   const { wordpressPage } = data
   return (
     <Layout>
       <SEO title="home" />
-      <h1>CCP v2</h1>
-      <div dangerouslySetInnerHTML={{ __html: wordpressPage.content }} />
+      <Image imgPath={'welcome_to_ccp.png'} />
       <Link to={`blog`}>Go to the Blog</Link>
       <br />
       <Link to={`sermons`}>Go to the Sermon Archive</Link>
