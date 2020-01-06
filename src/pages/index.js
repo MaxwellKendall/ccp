@@ -10,11 +10,8 @@ export default ({ data }) => {
     <Layout>
       <SEO title="home" />
       <Image imgPath={'welcome_to_ccp.png'} />
-      <Link to={`blog`}>Go to the Blog</Link>
       <br />
-      <Link to={`sermons`}>Go to the Sermon Archive</Link>
       <br />
-      <Link to={`events`}>Go to the Events Page</Link>
     </Layout>
   )
 }
