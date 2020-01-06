@@ -26,9 +26,9 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div className="bg-gray-200">
-        <main>{children}</main>
-        <footer>
+      <div className="bg-gray-200 flex flex-col h-full">
+        <main className="flex-grow">{children}</main>
+        <footer className="flex-shrink-0 text-center">
           © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
           SC
         </footer>
