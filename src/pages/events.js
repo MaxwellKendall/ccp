@@ -1,12 +1,50 @@
 import React from "react"
 import moment from "moment"
-import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
+
+import Layout from "../components/layout"
+
+const getClassByEventSummary = (event) => {
+  console.log("event", event);
+  if (moment(event.start.dateTime).weekday() === 0) {
+    return 'lords-day-event';
+  }
+  if (event.summary.toLowerCase().includes("study")) {
+    return 'bible-study-event';
+  }
+  return 'ccp-event';
+};
 
 export default ({ data }) => {
+  const handleEventClick = (args) => {
+    console.log(args.event);
+    console.log(moment(args.event.start).weekday());
+  };
+
+  const events = data.allGoogleCalendarEvent.edges.map((edge) => ({
+    title: edge.node.summary,
+    start: moment(edge.node.start.dateTime).format(),
+    end: moment(edge.node.end.dateTime).format(),
+    className: getClassByEventSummary(edge.node),
+    location: edge.node.location,
+    attachments: edge.node.attachments
+      ? edge.node.attachments[0].fileUrl
+      : null
+  }));
   return (
     <Layout>
-      {data.allGoogleCalendarEvent.edges.map(edge => {
+      <FullCalendar
+        defaultView="dayGridWeek"
+        plugins={[dayGridPlugin, interactionPlugin]}
+        dateClick={(arg) => console.log("date was clicked", arg)}
+        weekends
+        eventClick={handleEventClick}
+        events={events} />
+
+      {/* {data.allGoogleCalendarEvent.edges.map(edge => {
         const event = edge.node
         return (
           <Link to={`events/${event.slug}`}>
@@ -19,7 +57,7 @@ export default ({ data }) => {
             </h2>
           </Link>
         )
-      })}
+      })} */}
     </Layout>
   )
 }

@@ -54,7 +54,7 @@ module.exports = {
           .add(1, "y")
           .format(),
         timeMin: moment()
-          .subtract(3, "m")
+          .subtract(3, "M")
           .format(),
       },
     },
