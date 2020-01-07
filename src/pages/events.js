@@ -1,9 +1,7 @@
 import React from "react"
 import moment from "moment"
 import { graphql, Link } from "gatsby"
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
+import Loadable from 'react-loadable'
 
 import Layout from "../components/layout"
 
@@ -17,6 +15,13 @@ const getClassByEventSummary = (event) => {
   }
   return 'ccp-event';
 };
+
+const loading = () => <p>Loading...</p>;
+
+const Calendar = Loadable({
+  loader: () => import("../components/calendar"),
+  loading
+})
 
 export default ({ data }) => {
   const handleEventClick = (args) => {
@@ -36,11 +41,8 @@ export default ({ data }) => {
   }));
   return (
     <Layout>
-      <FullCalendar
-        defaultView="dayGridWeek"
-        plugins={[dayGridPlugin, interactionPlugin]}
+      <Calendar
         dateClick={(arg) => console.log("date was clicked", arg)}
-        weekends
         eventClick={handleEventClick}
         events={events} />
 
