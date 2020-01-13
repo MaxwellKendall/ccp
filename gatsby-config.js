@@ -7,6 +7,7 @@ const {
   WORDPRESS_CLIENT_ID,
   GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
   SERMON_AUDIO_API_KEY,
+  GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY
 } = process.env
 
 module.exports = {
@@ -31,6 +32,12 @@ module.exports = {
       options: {
         apiKey: SERMON_AUDIO_API_KEY,
       },
+    },
+    {
+      resolve: `gatsby-source-google-drive`,
+      options: {
+        envVar: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY
+      }
     },
     {
       resolve: `gatsby-source-google-calendar-events`,
