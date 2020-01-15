@@ -21,6 +21,7 @@
     "gatsby-plugin-react-helmet": "^3.1.16",
     "gatsby-plugin-sass": "^2.1.26",
     "gatsby-plugin-sharp": "^2.3.5",
+    "gatsby-source-drive": "0.0.2",
     "gatsby-source-filesystem": "^2.1.40",
     "gatsby-source-google-calendar-events": "^0.2.3",
     "gatsby-source-sermon-audio": "^0.1.5",

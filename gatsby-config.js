@@ -1,4 +1,5 @@
 const moment = require("moment")
+const path = require("path")
 require("dotenv").config()
 
 const {
@@ -7,13 +8,14 @@ const {
   WORDPRESS_CLIENT_ID,
   GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
   SERMON_AUDIO_API_KEY,
-  GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY
+  GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
+  GOOGLE_DRIVE_FOLDER_ID
 } = process.env
 
 module.exports = {
   siteMetadata: {
     title: `Christ Church, Charleston, SC (PCA)`,
-    description: `Biblical. Confessional. Reformed. Reverent`,
+    description: `Biblical. Confessional. Reformed. Reverent.`,
     author: `Maxwell Kendall`,
     address: '46 Wando Park BLVD'
   },
@@ -34,9 +36,11 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-google-drive`,
+      resolve: 'gatsby-source-google-drive',
       options: {
-        envVar: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY
+        folderId: GOOGLE_DRIVE_FOLDER_ID,
+        key: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
+        destination: path.join(__dirname, 'src/drive')
       }
     },
     {
@@ -71,6 +75,13 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `drive-data`,
+        path: `${__dirname}/src/drive`,
       },
     },
     `gatsby-transformer-sharp`,
