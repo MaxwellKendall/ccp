@@ -3,7 +3,7 @@ const path = require(`path`);
 const mkdirp = require(`mkdirp`);
 const fs = require(`fs`);
 
-const log = str => console.log(`\n\n🚗 `, str);
+const log = str => console.log(`\n🚗 `, str);
 const FOLDER = `application/vnd.google-apps.folder`;
 const GOOGLE_DOC = 'application/vnd.google-apps.document';
 
@@ -51,36 +51,37 @@ exports.onPreBootstrap = (
 
     // getting the drive client
     const driveClient = google.drive('v3');
-    const files = await getFolder(driveClient, folderId);
+    const filesInFolder = await getFolder(driveClient, folderId);
 
     // Create content directory if it doesn't exist.
     mkdirp(destination);
 
     // Start downloading recursively through all folders.
-    console.time(`Downloading content`);
+    console.time(`Downloading content ⏲`);
 
-    recursiveFolders(files, undefined, driveClient, destination).then(() => {
-      console.timeEnd(`Downloading content`);
-      resolve();
-    });
+    Promise.all(fetchFilesInFolder(filesInFolder, undefined, driveClient, destination))
+      .then(() => {
+        resolve();
+        log(`Downloaded all files from Google Drive! 🍻`);
+        console.timeEnd(`Downloading content ⏲`);
+      });
   });
 };
 
-function recursiveFolders(filesToDownload, parent = '', driveClient, destination) {
-  return new Promise(async (resolve, reject) => {
-    let promises = [];
+function fetchFilesInFolder(filesInFolder, parent = '', driveClient, destination) {
+    const promises = [];
 
-    filesToDownload.forEach(async (file) => {
-      // Check if it`s a folder or a file
+    filesInFolder.forEach(async (file) => {
       if (file.mimeType === FOLDER) {
         // If it`s a folder, create it in filesystem
-        log(`Creating folder ${parent}/${file.name}`);
-        mkdirp(path.join(destination, parent, file.name));
+        const snakeCasedFolderName = file.name.toLowerCase().split(' ').join('_');
+        log(`Creating folder ${parent}/${snakeCasedFolderName}`);
+        mkdirp(path.join(destination, parent, snakeCasedFolderName));
 
         // Then, get the files inside and run the function again.
         const files = await getFolder(driveClient, file.id);
         promises.push(
-          recursiveFolders(files, `${parent}/${file.name}`, driveClient, destination)
+          ...fetchFilesInFolder(files, `${parent}/${snakeCasedFolderName}`, driveClient, destination)
         );
       }
       else {
@@ -88,29 +89,19 @@ function recursiveFolders(filesToDownload, parent = '', driveClient, destination
           new Promise(async (resolve, reject) => {
             // If it`s a file, download it and convert to buffer.
             const filePath = path.join(destination, parent, getFilenameByMime(file));
-            const data = await driveClient.files.get({ fileId: file.id, alt: 'media', fields: "*" }, { responseType: 'arraybuffer' });
-            const buff = new Buffer.from(data.data);
-            // const test = zlib.gunzipSync(buff)
-            // console.log("file id", file.id);
-            fs.writeFile(filePath, buff, () => {
-              console.log(`${file.name} written`);
-            });
+            const { data } = await driveClient.files.get({ fileId: file.id, alt: 'media', fields: "*" }, { responseType: 'arraybuffer' });
+            const buff = new Buffer.from(data);
             
-            resolve(getFilenameByMime(file));
-            resolve(getFilenameByMime(file));
+            fs.writeFile(filePath, buff, () => {
+              log(`${file.name} written`);
+              resolve(getFilenameByMime(file));
+            });
           })
         );
       }
     });
 
-    Promise.all(promises).then(() => {
-      console.log('all done');
-      resolve();
-    });
-
-    // We're done, return.
-    return;
-  });
+    return promises;
 }
 
 const fileExtensionsByMime = new Map([
