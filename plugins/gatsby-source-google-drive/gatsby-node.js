@@ -79,10 +79,12 @@ function fetchFilesInFolder(filesInFolder, parent = '', driveClient, destination
         mkdirp(path.join(destination, parent, snakeCasedFolderName));
 
         // Then, get the files inside and run the function again.
-        const files = await getFolder(driveClient, file.id);
-        promises.push(
-          ...fetchFilesInFolder(files, `${parent}/${snakeCasedFolderName}`, driveClient, destination)
-        );
+        const nestedFiles = getFolder(driveClient, file.id)
+          .then((files) => {
+            // combining array of promises into one.
+            return Promise.all(fetchFilesInFolder(files, `${parent}/${snakeCasedFolderName}`, driveClient, destination));
+          });
+        promises.push(nestedFiles);
       }
       else {
         promises.push(
