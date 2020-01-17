@@ -9,7 +9,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <SEO title="home" />
-      <Image imgPath={'welcome_to_ccp.png'} />
+      <Image imgPath={'home_page/welcome_to_ccp.png'} />
       <br />
       <br />
     </Layout>

@@ -32,7 +32,6 @@ const Image = ({ imgPath }) => {
   `)
 
   const img = data.allFile.edges.find((edge) => edge.node.relativePath === imgPath);
-    console.log("img", data);
   return <Img fluid={img.node.childImageSharp.fluid} />
 }
 
