@@ -6,7 +6,6 @@ import Loadable from 'react-loadable'
 import Layout from "../components/layout"
 
 const getClassByEventSummary = (event) => {
-  console.log("event", event);
   if (moment(event.start.dateTime).weekday() === 0) {
     return 'lords-day-event';
   }
