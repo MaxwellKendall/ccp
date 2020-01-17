@@ -36,7 +36,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-google-drive',
+      resolve: 'gatsby-source-gdrive',
       options: {
         folderId: GOOGLE_DRIVE_FOLDER_ID,
         key: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
