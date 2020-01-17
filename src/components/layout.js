@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
       site {
         siteMetadata {
           title
+          description
         }
       }
     }
@@ -25,7 +26,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header siteTitle={data.site.siteMetadata.title} siteDescription={data.site.siteMetadata.description} />
       <div className="bg-gray-200 flex flex-col h-full">
         <main className="flex-grow">{children}</main>
         <footer className="flex-shrink-0 text-center">
