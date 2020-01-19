@@ -26,6 +26,26 @@ html {
     }
     header {
       background: rgb(32,83,114);
+      z-index: 50;
+      .ccp-nav {
+        padding: 0;
+        margin: 0;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        z-index: 40;
+        right: -999px;
+        background: #4D748C;
+        transition: all .25s cubic-bezier(.445,.05,.55,.95);
+      }
+      .show-nav {
+        right: 0px;
+        width: 85%;
+      }
+      li,
+      li span {
+        color: white;
+      }
     }
   }
 }

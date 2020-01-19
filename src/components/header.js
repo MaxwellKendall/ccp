@@ -1,41 +1,52 @@
+import React, { useState, useCallback } from "react"
 import { Link, useStaticQuery } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import Img from "gatsby-image"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import cx from "classnames"
 
-const Header = ({ siteTitle, siteDescription }) => {
+import MenuSearch from "../icons/menuSearch"
+
+const Header = ({ siteDescription }) => {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: {eq: "ccp_logo.png"}) {
         childImageSharp {
-          resize(width: 250) {
-            src
-            tracedSVG
-            width
-            height
-            aspectRatio
-          }
+          fluid(maxWidth: 250, quality: 100) {
+            ...GatsbyImageSharpFluid
+            presentationWidth
         }
       }
     }
+  }
   `)
+
+  const [isNavVisible, showNav] = useState(false);
+  const [marginTop, setMarginTop] = useState(0);
+  const toggleNav = () => showNav(!isNavVisible);
+  
+  const measuredRef = useCallback(node => {
+    if (node !== null) {
+      console.log("yo", node.getBoundingClientRect().height);
+      setMarginTop(node.getBoundingClientRect().height);
+    }
+  }, []);
+  
   return (
-    <header className="bg-black p-4 flex items-center justify-start">
-      <Link className="ml-2 flex items-center w-11/12" to="/">
-        <Img className="align-middle" fixed={data.file.childImageSharp.resize} />
-        <span className="my-0 text-white ml-8 italic">{siteDescription}</span>
+    <header ref={measuredRef} className="p-4 flex flex-row items-center justify-start">
+      <Link className="w-5/6 md:w-11/12 flex flex-col self-start md:ml-2" to="/">
+        <Img className="align-middle" fluid={data.file.childImageSharp.fluid} />
       </Link>
-      <FontAwesomeIcon className="text-white ml-auto mr-5" icon={faSearch} />
-      <ul className="my-0 mx-auto flex">
-        <li className="my-0 text-white mr-2">
+      <span className="my-0 hidden md:flex text-white md:ml-8 text-center italic">{siteDescription}</span>
+      <MenuSearch buttonClassName="ml-auto" isNavVisible={isNavVisible} toggleNav={toggleNav} />
+      <ul style={{ marginTop: marginTop }} className={cx(`ccp-nav flex flex-col text-center flex-center items-center`, { 'show-nav': isNavVisible })}>
+        <li className="mb-8 mt-4"><span className="my-0 flex text-white text-center italic">{siteDescription}</span></li>
+        <li className="py-6 w-3/4 border-white my-0">
           <Link to={`blog`}>Blog</Link>
         </li>
-        <li className="my-0 text-white mr-2">
+        <li className="py-6 w-3/4 border-white my-0">
           <Link to={`sermons`}>Sermons</Link>
         </li>
-        <li className="my-0 text-white">
+        <li className="py-6 w-3/4 border-white my-0">
           <Link to={`events`}>Events</Link>
         </li>
       </ul>
