@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { graphql } from "gatsby"
 import moment from "moment"
 import Img from "gatsby-image"
@@ -9,6 +9,10 @@ import SEO from "../components/seo"
 import Card from "../components/card"
 
 export default ({ data }) => {
+  const totalItems = data.allWordpressPost.edges.length + data.allSermon.edges.length
+  const divisor = (totalItems) / 100
+  const [sermonEndIndex, setSermonEndIndex] = useState(totalSermons / divisor)
+
   const getSermonExcerpt = sermon => (
     <React.Fragment>
       <div className="flex items-center justify-center md:justify-start flex-col md:flex-row pb-2">
@@ -25,26 +29,37 @@ export default ({ data }) => {
     </React.Fragment>
   )
 
+  const handleScroll = e => {
+    const { scrollHeight, scrollTop, clientHeight } = e.target
+    const pxTilBottom = scrollHeight - scrollTop
+    // 100px before they get to the bottom of the screen
+    const shouldAddMoreScrollingSpace = pxTilBottom - 100 < clientHeight
+    if (shouldAddMoreScrollingSpace) {
+      setSermonEndIndex(sermonEndIndex + 100)
+    }
+  }
+
+  const isBlogPost = (node) => Object.keys(node).includes("type")
+
   return (
-    <Layout className="mx-auto flex flex-col py-10 px-5">
+    <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="Search Results" />
       <h1>Search Results</h1>
-      {slice(data.allWordpressPost.edges, 0, 100)
+      {slice([
+        ...data.allWordpressPost.edges,
+        ...data.allSermon.edges
+       ], 0, divisor)
         .map(({ node }) => (
             <Card
                 title={node.title}
                 slug={`blog/${node.slug}`}
-                element={<div dangerouslySetInnerHTML={{ __html: node.excerpt }} />}
+                element={
+                  isBlogPost(node)
+                    ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+                    : getSermonExcerpt(node)
+                }
             />
       ))}
-      {slice(data.allSermon.edges, 0, 100)
-        .map(({ node }) => (
-            <Card
-                title={node.fullTitle}
-                slug={`sermons/${node.slug}`}
-                element={getSermonExcerpt(node)}
-                />
-        ))}
     </Layout>
   )
 }

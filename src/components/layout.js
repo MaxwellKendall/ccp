@@ -13,7 +13,7 @@ import { throttle } from "lodash"
 import Header from "./header"
 import "../styles/index.scss"
 
-const Layout = ({ children }) => {
+const Layout = ({ onScroll, children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -44,7 +44,9 @@ const Layout = ({ children }) => {
     <>
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
       <div style={{ paddingTop: headerHeight }} className="bg-gray-200 flex flex-col h-full">
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow" onScroll={onScroll} style={{ overflow: 'auto' }}>
+          {children}
+        </main>
         <footer className="flex-shrink-0 text-center">
           © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
           SC
