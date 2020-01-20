@@ -10,6 +10,7 @@ export default ({ data }) => {
         <h1>Sermon Title: {sermon.fullTitle}</h1>
         <h2>Speaker: {sermon.speaker.displayName}</h2>
         <p>Download Count: {sermon.downloadCount} </p>
+        <p>Bible Passage: {sermon.bibleText}</p>
         <audio controls src={`${sermon.media.audio[0].downloadURL}`} />
       </div>
     </Layout>
@@ -20,20 +21,7 @@ export const query = graphql`
     allSermon(filter: { id: { eq: $id } }) {
       edges {
         node {
-          preachDate
-          bibleText
-          downloadCount
-          series {
-            title
-            count
-          }
-          fullTitle
-          speaker {
-            bio
-            displayName
-            portraitURL
-            roundedThumbnailImageURL
-          }
+          ...SermonOverview
           media {
             audio {
               streamURL
