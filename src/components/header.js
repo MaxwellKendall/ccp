@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link, useStaticQuery, graphql, navigate } from "gatsby"
 import Img from "gatsby-image"
 import PropTypes from "prop-types"
 import cx from "classnames"
@@ -30,7 +30,12 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
   
   const toggleNav = () => showNav(!isNavVisible)
 
-  const submitSearch = () => setSearchResults(searchString)
+  const submitSearch = () => {
+    navigate('/search', {
+      state: {
+        searchString: searchString
+      }})
+  }
 
   const handleSearch = (e) => {
     e.preventDefault()

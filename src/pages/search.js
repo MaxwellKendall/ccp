@@ -10,8 +10,8 @@ import Card from "../components/card"
 
 export default ({ data }) => {
   const totalItems = data.allWordpressPost.edges.length + data.allSermon.edges.length
-  const divisor = (totalItems) / 100
-  const [sermonEndIndex, setSermonEndIndex] = useState(totalItems / divisor)
+  const divisor = totalItems / 100
+  const [endIndex, setEndIndex] = useState(totalItems / divisor)
 
   const getSermonExcerpt = sermon => (
     <React.Fragment>
@@ -35,11 +35,14 @@ export default ({ data }) => {
     // 100px before they get to the bottom of the screen
     const shouldAddMoreScrollingSpace = pxTilBottom - 100 < clientHeight
     if (shouldAddMoreScrollingSpace) {
-      setSermonEndIndex(sermonEndIndex + 100)
+      setEndIndex(endIndex + 100)
     }
   }
 
-  const isBlogPost = (node) => Object.keys(node).includes("type")
+  const isBlogPost = (node) => {
+    console.log("Node", node)
+    return Object.keys(node).includes("wordpress_id")
+  }
 
   return (
     <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
@@ -48,11 +51,11 @@ export default ({ data }) => {
       {slice([
         ...data.allWordpressPost.edges,
         ...data.allSermon.edges
-       ], 0, divisor)
+       ], 0, endIndex)
         .map(({ node }) => (
             <Card
                 title={node.title}
-                slug={`blog/${node.slug}`}
+                slug={isBlogPost(node) ? `blog/${node.slug}` : `sermons/${node.slug}`}
                 element={
                   isBlogPost(node)
                     ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
@@ -70,6 +73,7 @@ export const pageQuery = graphql`
         edges {
           node {
             ...blogPostOverview
+            wordpress_id
           }
         }
     }
