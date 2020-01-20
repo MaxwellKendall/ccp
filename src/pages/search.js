@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
 import moment from "moment"
 import Img from "gatsby-image"
@@ -11,7 +11,7 @@ import Card from "../components/card"
 export default ({ data }) => {
   const totalItems = data.allWordpressPost.edges.length + data.allSermon.edges.length
   const divisor = (totalItems) / 100
-  const [sermonEndIndex, setSermonEndIndex] = useState(totalSermons / divisor)
+  const [sermonEndIndex, setSermonEndIndex] = useState(totalItems / divisor)
 
   const getSermonExcerpt = sermon => (
     <React.Fragment>
