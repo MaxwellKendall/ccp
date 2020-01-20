@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState } from "react"
 import { Link, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import PropTypes from "prop-types"
