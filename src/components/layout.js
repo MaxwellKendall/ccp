@@ -5,9 +5,10 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, useEffect, createRef } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
+import { throttle } from "lodash"
 
 import Header from "./header"
 import "../styles/index.scss"
@@ -24,12 +25,20 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(0)
+  const [ref, setRef] = useState(null)
   const measuredRef = useCallback(node => {
     if (node !== null) {
-      setHeaderHeight(node.getBoundingClientRect().height);
+      setRef(node)
+      setHeaderHeight(node.getBoundingClientRect().height)
     }
-  }, []);
+  }, [])
+
+  useEffect(() => {
+   window.addEventListener('resize', throttle(() => measuredRef(ref), 100))
+   
+   return () => window.removeEventListener('resize', null)
+  }, [measuredRef, ref])
 
   return (
     <>

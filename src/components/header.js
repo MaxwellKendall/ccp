@@ -54,4 +54,6 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
+Header.displayName = 'Header'
+
 export default Header
