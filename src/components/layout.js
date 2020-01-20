@@ -41,10 +41,10 @@ const Layout = ({ onScroll, children }) => {
   }, [measuredRef, ref])
 
   return (
-    <>
+    <div onScroll={onScroll} style={{ overflow: 'auto' }} className="h-full">
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
       <div style={{ paddingTop: headerHeight }} className="bg-gray-200 flex flex-col h-full">
-        <main className="flex-grow" onScroll={onScroll} style={{ overflow: 'auto' }}>
+        <main className="flex-grow">
           {children}
         </main>
         <footer className="flex-shrink-0 text-center">
@@ -52,7 +52,7 @@ const Layout = ({ onScroll, children }) => {
           SC
         </footer>
       </div>
-    </>
+    </div>
   )
 }
 

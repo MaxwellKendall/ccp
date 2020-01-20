@@ -23,7 +23,6 @@ export default ({ data }) => {
           }} />
         <strong className="pl-2 text-center md:text-left">{`${sermon.speaker.displayName} on ${sermon.bibleText}; preached ${moment(sermon.preachDate).format('LL')}.`}
         </strong>
-        <span>{`On ${sermon.bibleText}`}</span>
       </div>
       <span className="italic">{`Downloaded ${sermon.downloadCount} times.`}</span>
     </React.Fragment>
@@ -54,7 +53,7 @@ export default ({ data }) => {
        ], 0, endIndex)
         .map(({ node }) => (
             <Card
-                title={node.title}
+                title={isBlogPost(node) ? node.title : node.fullTitle}
                 slug={isBlogPost(node) ? `blog/${node.slug}` : `sermons/${node.slug}`}
                 element={
                   isBlogPost(node)
