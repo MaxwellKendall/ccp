@@ -17,7 +17,6 @@ export const sermonOveriew = graphql`
 
 export const blogPostOverview = graphql`
   fragment blogPostOverview on wordpress__POST {
-    author
     date
     excerpt
     slug
