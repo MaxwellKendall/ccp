@@ -14,7 +14,6 @@ const isBlogPost = (node) => {
 }
 
 const isMatchingResult = (node, searchString) => {
-  console.log("node", node, searchString)
   if (isBlogPost(node)) {
     return (
       node.title.includes(searchString) ||
@@ -50,23 +49,20 @@ export default ({
   location
 }) => {
   const [results, setResults] = useState([])
-  const defaultSearchString = location.state.searchString || ''
+  const defaultSearchString = get(location, 'state.searchString', '')
   const [searchString, setSearchString] = useState(defaultSearchString)
   const [endIndex, setEndIndex] = useState(100)
 
   useEffect(() => {
     const allItems = searchString === ""
       ? [...data.allWordpressPost.edges, ...data.allSermon.edges]
-      // : [...data.allWordpressPost.edges, ...data.allSermon.edges].filter(({ node }) => true)
       : [...data.allWordpressPost.edges, ...data.allSermon.edges].filter(({ node }) => isMatchingResult(node, searchString))
-    console.log("allitems", allItems)
     const totalItems = allItems.length
     const divisor = totalItems >= 200
       ? totalItems / 100
       : 1
     
     setResults(allItems)
-    console.log()
     setEndIndex(totalItems / divisor)
 
   }, [setResults, data, searchString])
