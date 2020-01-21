@@ -5,10 +5,7 @@ import PropTypes from "prop-types"
 import cx from "classnames"
 
 import MenuSearch from "../icons/menuSearch"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch } from "@fortawesome/free-solid-svg-icons"
-
-const searchPlaceholder = "Sermons / Blogs"
+import SearchInput from "./searchInput"
 
 const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
   const data = useStaticQuery(graphql`
@@ -25,28 +22,15 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
   `)
 
   const [isNavVisible, showNav] = useState(false);
-  const [searchString, setSearchString] = useState("")
-  const [searchResults, setSearchResults] = useState([])
   
   const toggleNav = () => showNav(!isNavVisible)
 
-  const submitSearch = () => {
+  const submitSearch = (str) => {
+    console.log("SWRELELLELELE")
     navigate('/search', {
       state: {
-        searchString: searchString
+        searchString: str
       }})
-  }
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if(e.keyCode === '13') {
-      submitSearch()
-    }
-  }
-
-  const handleInputChange = (e) => {
-    e.preventDefault()
-    setSearchString(e.target.value)
   }
   
   return (
@@ -59,16 +43,7 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
       <ul style={{ marginTop: headerHeight }} className={cx(`ccp-nav flex flex-col text-center flex-center items-center`, { 'show-nav': isNavVisible })}>
         <li className="mb-8 mt-4"><span className="my-0 flex text-white text-center italic">{siteDescription}</span></li>
         <li className="py-6 w-full border-white my-0">
-          <input
-            className="rounded-lg lg:hidden leading-loose p-2 text-black outline-none focus:border-gray-300 border-solid border"
-            type="text"
-            value={searchString}
-            onChange={handleInputChange}
-            onKeyUp={handleSearch}
-            placeholder={searchPlaceholder} />
-            <button tabIndex="0" onClick={submitSearch}>
-              <FontAwesomeIcon icon={faSearch} color="white" className="ml-2" size="lg" />
-            </button>
+          <SearchInput submitSearch={submitSearch} />
         </li>
         <li className="py-6 w-3/4 border-white my-0">
           <Link to={`blog`}>Blog</Link>
