@@ -35,7 +35,8 @@ html {
         bottom: 0px;
         z-index: 40;
         right: -999px;
-        background: #4D748C;
+        // background: #4D748C;
+        background:rgb(17,47,81);
         transition: all .25s cubic-bezier(.445,.05,.55,.95);
       }
       .show-nav {

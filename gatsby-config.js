@@ -17,7 +17,43 @@ module.exports = {
     title: `Christ Church, Charleston, SC (PCA)`,
     description: `Biblical. Confessional. Reformed. Reverent.`,
     author: `Maxwell Kendall`,
-    address: '46 Wando Park BLVD'
+    address: '46 Wando Park BLVD',
+    links: [
+      {
+        label: 'Welcome',
+        link: '/welcome'
+      },
+      {
+        label: 'About',
+        link: '/about',
+        children: [
+          {
+            label: 'What we Believe',
+            link: '/about/beliefs'
+          },
+          {
+            label: 'Our Staff',
+            link: '/about/staff'
+          },
+          {
+            label: 'Our History',
+            link: '/about/history'
+          }
+        ]
+      },
+      {
+        label: 'Sermons',
+        link: '/sermons'
+      },
+      {
+        label: 'Blog',
+        link: '/blog'
+      },
+      {
+        label: 'Events',
+        link: '/event'
+      },
+    ]
   },
   plugins: [
     {

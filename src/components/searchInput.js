@@ -16,8 +16,6 @@ const SearchInput = ({ submitSearch, placeHolder = searchPlaceholder }) => {
     e.preventDefault()
     console.log("e", e.keyCode)
     if(e.keyCode === 13) {
-        console.log("SQRLE GGGG")
-
       handleSubmit()
     }
   }
