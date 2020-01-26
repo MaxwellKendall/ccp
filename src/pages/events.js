@@ -1,12 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 import moment from "moment"
-import { graphql, Link } from "gatsby"
+import { graphql, navigate } from "gatsby"
 import Loadable from 'react-loadable'
 
 import Layout from "../components/layout"
 
-const getClassByEventSummary = (event) => {
-  if (moment(event.start.dateTime).weekday() === 0) {
+const getClassByEventSummary = (event, selectedDate) => {
+  if (moment(event.start.dateTime) === selectedDate) {
+    return 'selected-date'
+  }
+  else if (moment(event.start.dateTime).weekday() === 0) {
     return 'lords-day-event';
   }
   if (event.summary.toLowerCase().includes("study")) {
@@ -23,25 +26,32 @@ const Calendar = Loadable({
 })
 
 export default ({ data }) => {
+  const [selectedDate, updateSelectedDate] = useState(moment().format('MM-DD-YYYY'))
+
   const handleEventClick = (args) => {
-    console.log(args.event);
-    console.log(moment(args.event.start).weekday());
-  };
+    navigate(`events/${args.event.extendedProps.slug}`)
+  }
+
+  const handleDateClick = (args) => {
+    console.log(`Date was clicked ${args}`)
+  }
 
   const events = data.allGoogleCalendarEvent.edges.map((edge) => ({
     title: edge.node.summary,
     start: moment(edge.node.start.dateTime).format(),
     end: moment(edge.node.end.dateTime).format(),
-    className: getClassByEventSummary(edge.node),
+    className: getClassByEventSummary(edge.node, selectedDate),
     location: edge.node.location,
     attachments: edge.node.attachments
       ? edge.node.attachments[0].fileUrl
-      : null
-  }));
+      : null,
+    slug: edge.node.slug
+  }))
+  
   return (
     <Layout>
       <Calendar
-        dateClick={(arg) => console.log("date was clicked", arg)}
+        dateClick={handleDateClick}
         eventClick={handleEventClick}
         events={events} />
 
