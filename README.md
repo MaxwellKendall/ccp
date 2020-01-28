@@ -1,8 +1,10 @@
 CCP v2
 
-- [ ] Sermons
+- [x] Sermons
+- [x] Search
+- [ ] Mobile Responsiveness
 - [ ] Podcasts w/ RSS link
-- [ ] Blog w/ Headless CMS
-- [ ] Calendar
+- [x] Blog w/ Headless CMS
+- [x] Calendar
 - [ ] Google Maps Integration for showing location
 - [ ] Tithing via Paypal
