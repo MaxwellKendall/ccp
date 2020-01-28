@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useCallback, useState, useEffect, createRef } from "react"
+import React, { useCallback, useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { throttle } from "lodash"
@@ -45,7 +45,7 @@ const Layout = ({ onScroll, children }) => {
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
       <div style={{ paddingTop: headerHeight }} className="bg-gray-200 flex flex-col h-full">
         <main className="flex-grow">
-          {children}
+          {children.map((child) => React.cloneElement(child, { headerHeight }))}
         </main>
         <footer className="flex-shrink-0 text-center">
           © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
