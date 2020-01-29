@@ -9,6 +9,8 @@ import React, { useCallback, useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { throttle } from "lodash"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFacebook, faInstagram, faMailchimp } from "@fortawesome/free-brands-svg-icons"
 
 import Header from "./header"
 import Img from "gatsby-image"
@@ -55,14 +57,21 @@ const Layout = ({ onScroll, children }) => {
         <main className="flex-grow">
           {children}
         </main>
-        <footer className="py-4 px-2 flex-shrink-0 flex items-center justify-center">
-          <Link className="w-2/5" to="/">
-            <Img fluid={data.footerImg.childImageSharp.fluid} />
-          </Link>
-          <p className="w-2/5 ml-auto py-4 text-white">
-            © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
-          SC
-          </p>
+        <footer className="flex flex-col items-center justify-center flex-shrink-0 py-4 px-2">
+          <div className="flex items-center justify-center w-full">
+            <Link className="mr-auto w-2/4" to="/">
+              <Img fluid={data.footerImg.childImageSharp.fluid} />
+            </Link>
+            <div className="w-1/4">
+              <a href="https://www.facebook.com/christchurchcharleston" className="mr-2"><FontAwesomeIcon icon={faFacebook} color="white" size="lg" /></a>
+              <a href="https://www.instagram.com/christchurchcharleston/"><FontAwesomeIcon icon={faInstagram} color="white" size="lg" /></a>
+              <a href="https://www.facebook.com/christchurchcharleston" className="ml-2"><FontAwesomeIcon icon={faMailchimp} color="white" size="lg" /></a>
+            </div>
+          </div>
+            <p className="text-white">
+              © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
+            SC
+            </p>
         </footer>
       </div>
     </div>
