@@ -65,12 +65,12 @@ export default ({ data }) => {
     <Layout>
       <SEO title="Home" />
       <Carousel
-        data={images}
-        totalSlides={images.edges.length} />
+        data={data.images}
+        totalSlides={data.images.edges.length} />
         <ul className="m-0 flex items-center home-page__subnav">
           {subMenu.map((item, i) => (
             <li
-              className={`px-2 py-6 m-0 w-full ${cx({ active: activeTab === camelCase(item)})}`}
+              className={`rounded text-center font-semibold px-2 py-6 m-0 w-full ${cx({ active: activeTab === camelCase(item)})}`}
               onClick={setActiveTab.bind(null, camelCase(item))}
               key={i}>
                 {item}

@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         label: 'Events',
-        link: '/event'
+        link: '/events'
       },
     ]
   },
