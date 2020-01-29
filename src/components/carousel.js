@@ -3,6 +3,7 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-re
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronCircleRight, faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons"
 import Img from "gatsby-image"
+import { throttle } from "lodash"
 
 const offset = 55
 
@@ -23,12 +24,19 @@ const Carousel = ({ data, totalSlides }) => {
   const aspectRatio = data.edges[0].node.childImageSharp.fluid.aspectRatio
   const [buttonPosition, setButtonPosition] = useState({ height: null, width: null })
   
-  useEffect(() => {
-    if(carousel.current && buttonPosition.height
-       !== carousel.current.offsetHeight) {
-      setButtonPosition({ height: carousel.current.offsetHeight, width: carousel.current.offsetWidth })
+  const updateArrowPositions = () => {
+    if(carousel.current) {
+      const windowChanged = (buttonPosition.height !== carousel.current.offsetHeight || buttonPosition.width !== carousel.current.offsetWidth)
+      if (windowChanged) {
+       setButtonPosition({ height: carousel.current.offsetHeight, width: carousel.current.offsetWidth })
+      }
     }
-  }, [carousel, setButtonPosition])
+  }
+  
+  useEffect(() => {
+    window.addEventListener("resize", throttle(updateArrowPositions), 250)
+    updateArrowPositions()
+  })
   
   return (
     <div ref={carousel}>
@@ -36,6 +44,8 @@ const Carousel = ({ data, totalSlides }) => {
         className="w-full"
         naturalSlideHeight={1}
         naturalSlideWidth={aspectRatio}
+        // isPlaying
+        // infinite
         totalSlides={totalSlides}>
         <Slider className="h-full w-full">
           {data.edges

@@ -17,7 +17,6 @@ const filterEvents = (event) => {
 }
 
 const ActiveSection = ({ section, data }) => {
-  console.log(section, data, "******")
   if (section === "upcomingEvents") {
     return data.upcomingEvents.edges
       .filter(({ node }) => filterEvents(node))
@@ -39,7 +38,6 @@ const ActiveSection = ({ section, data }) => {
   else if (section === "recentSermons") {
     return data.recentSermons.edges
       .map(({ node }) => {
-        console.log("sermon", node)
         return (
           <Card slug={`sermons/${node.slug}`} key={node.id} title={node.fullTitle}>
             <SermonExcerpt sermon={node} />

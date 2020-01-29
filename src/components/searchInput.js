@@ -14,7 +14,6 @@ const SearchInput = ({ submitSearch, placeHolder = searchPlaceholder }) => {
     
   const handleSearch = (e) => {
     e.preventDefault()
-    console.log("e", e.keyCode)
     if(e.keyCode === 13) {
       handleSubmit()
     }

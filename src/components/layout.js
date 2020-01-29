@@ -58,7 +58,7 @@ const Layout = ({ onScroll, children }) => {
           {children}
         </main>
         <footer className="flex flex-col items-center justify-center flex-shrink-0 py-4 px-2">
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center justify-center w-full pb-8">
             <Link className="mr-auto w-2/4" to="/">
               <Img fluid={data.footerImg.childImageSharp.fluid} />
             </Link>
@@ -68,7 +68,7 @@ const Layout = ({ onScroll, children }) => {
               <a href="https://www.facebook.com/christchurchcharleston" className="ml-2"><FontAwesomeIcon icon={faMailchimp} color="white" size="lg" /></a>
             </div>
           </div>
-            <p className="text-white">
+            <p className="text-white text-center w-full">
               © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
             SC
             </p>
