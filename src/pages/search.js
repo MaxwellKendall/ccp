@@ -66,13 +66,11 @@ export default ({
             <Card
                 key={node.id || node.wordpress_id}
                 title={isBlogPost(node) ? node.title : node.fullTitle}
-                slug={isBlogPost(node) ? `blog/${node.slug}/` : `sermons/${node.slug}/`}
-                element={
-                  isBlogPost(node)
+                slug={isBlogPost(node) ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>
+                  {isBlogPost(node)
                     ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-                    : <SermonExcerpt sermon={node} />
-                }
-            />
+                    : <SermonExcerpt sermon={node} />}
+            </Card>
       ))}
     </Layout>
   )

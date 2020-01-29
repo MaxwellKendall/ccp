@@ -36,9 +36,9 @@ export default ({ data }) => {
           <Card
             key={node.id}
             title={node.fullTitle}
-            slug={`sermons/${node.slug}`}
-            element={<SermonExcerpt sermon={node} />}
-          />
+            slug={`sermons/${node.slug}`}>
+              <SermonExcerpt sermon={node} />
+            </Card>
         ))}
     </Layout>
   )

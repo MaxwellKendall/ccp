@@ -20,7 +20,7 @@ const getButtonPosition = (state, buttonType) => {
 
 const Carousel = ({ data, totalSlides }) => {
   const carousel = createRef()
-  const aspectRatio = data.mobile_images.edges[0].node.childImageSharp.fluid.aspectRatio
+  const aspectRatio = data.edges[0].node.childImageSharp.fluid.aspectRatio
   const [buttonPosition, setButtonPosition] = useState({ height: null, width: null })
   
   useEffect(() => {
@@ -38,7 +38,7 @@ const Carousel = ({ data, totalSlides }) => {
         naturalSlideWidth={aspectRatio}
         totalSlides={totalSlides}>
         <Slider className="h-full w-full">
-          {data.mobile_images.edges
+          {data.edges
             .sort((edge1, edge2) => {
               if (edge1.node.name.includes('welcome')) return -1
               if (edge2.node.name.includes('welcome')) return 1

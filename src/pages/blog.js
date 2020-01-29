@@ -12,9 +12,9 @@ export default ({ data }) => {
       {data.allWordpressPost.edges.map(({ node }) => (
         <Card
           title={node.title}
-          slug={`blog/${node.slug}`}
-          element={<div dangerouslySetInnerHTML={{ __html: node.excerpt }} />}
-        />
+          slug={`blog/${node.slug}`}>
+            <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </Card>
       ))}
     </Layout>
   )
