@@ -45,7 +45,7 @@ const Carousel = ({ data, totalSlides }) => {
               return 0
             })
             .map((edge, i) => (
-              <Slide className="h-full w-full" index={i}>
+              <Slide className="h-full w-full nice-transition" index={i}>
                 <Img className="h-full w-full" fluid={edge.node.childImageSharp.fluid}/>
               </Slide>
           ))}

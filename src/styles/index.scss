@@ -49,6 +49,9 @@ html {
         color: white;
       }
     }
+    .nice-transition {
+      transition: all .25s cubic-bezier(.445,.05,.55,.95);
+    }
   }
 }
   
