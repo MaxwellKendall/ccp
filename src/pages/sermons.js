@@ -24,8 +24,8 @@ export default ({ data }) => {
   )
   return (
     <Layout className="mx-auto flex flex-col py-10 px-5">
-      <SEO title="CCP Sermon Archive" />
-      <h1>Sermon Archive</h1>
+      <SEO title="Christ Church Presbyterian Sermons" />
+      <h1>Sermons</h1>
       {data.allSermon.edges.map(({ node }) => (
         <Card
           title={node.fullTitle}

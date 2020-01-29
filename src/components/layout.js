@@ -45,7 +45,7 @@ const Layout = ({ onScroll, children }) => {
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
       <div style={{ paddingTop: headerHeight }} className="flex flex-col h-full">
         <main className="flex-grow">
-          {children.map((child) => React.cloneElement(child, { headerHeight }))}
+          {children}
         </main>
         <footer className="flex-shrink-0 text-center">
           © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
