@@ -81,7 +81,7 @@ export const pageQuery = graphql`
     allWordpressPost {
         edges {
           node {
-            ...blogPostOverview
+            ...BlogPostOverview
             wordpress_id
           }
         }
