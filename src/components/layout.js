@@ -41,9 +41,9 @@ const Layout = ({ onScroll, children }) => {
   }, [measuredRef, ref])
 
   return (
-    <div onScroll={onScroll} style={{ overflow: 'auto' }} className="h-full">
+    <div onScroll={onScroll} style={{ overflow: 'auto' }} className="h-full bg-gray-200">
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
-      <div style={{ paddingTop: headerHeight }} className="bg-gray-200 flex flex-col h-full">
+      <div style={{ paddingTop: headerHeight }} className="flex flex-col h-full">
         <main className="flex-grow">
           {children.map((child) => React.cloneElement(child, { headerHeight }))}
         </main>

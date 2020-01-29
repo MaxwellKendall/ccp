@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
@@ -26,6 +26,7 @@ export const pageQuery = graphql`
             fluid(maxWidth: 1000) {
               ...GatsbyImageSharpFluid
               presentationHeight
+              aspectRatio
             }
           }
         }
