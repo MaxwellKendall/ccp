@@ -8,6 +8,8 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Card from "../components/card"
 import SearchInput from "../components/searchInput"
+import { SermonExcerpt } from "./sermons"
+import { useInfiniteScroll } from "../helpers/hooks"
 
 const isBlogPost = (node) => {
   return Object.keys(node).includes("wordpress_id")
@@ -29,21 +31,6 @@ const isMatchingResult = (node, searchString) => {
   )
 }
 
-const getSermonExcerpt = sermon => (
-  <React.Fragment>
-    <div className="flex items-center justify-center md:justify-start flex-col md:flex-row pb-2">
-      <Img 
-        style={{ height: '50px', width: '50px' }}
-        fluid={{
-          src: sermon.speaker.roundedThumbnailImageURL
-        }} />
-      <strong className="pl-2 text-center md:text-left">{`${sermon.speaker.displayName} on ${sermon.bibleText}; preached ${moment(sermon.preachDate).format('LL')}.`}
-      </strong>
-    </div>
-    <span className="italic">{`Downloaded ${sermon.downloadCount} times.`}</span>
-  </React.Fragment>
-)
-
 export default ({
   data,
   location
@@ -51,7 +38,7 @@ export default ({
   const [results, setResults] = useState([])
   const defaultSearchString = get(location, 'state.searchString', '')
   const [searchString, setSearchString] = useState(defaultSearchString)
-  const [endIndex, setEndIndex] = useState(100)
+  const [endIndex, setEndIndex, handleScroll] = useInfiniteScroll(100)
 
   useEffect(() => {
     const allItems = searchString === ""
@@ -67,17 +54,6 @@ export default ({
 
   }, [setResults, data, searchString])
 
-
-  const handleScroll = e => {
-    const { scrollHeight, scrollTop, clientHeight } = e.target
-    const pxTilBottom = scrollHeight - scrollTop
-    // 100px before they get to the bottom of the screen
-    const shouldAddMoreScrollingSpace = pxTilBottom - 100 < clientHeight
-    if (shouldAddMoreScrollingSpace) {
-      setEndIndex(endIndex + 100)
-    }
-  }
-
   const submitSearch = (str) => setSearchString(str)
 
   return (
@@ -88,12 +64,13 @@ export default ({
       {slice(results, 0, endIndex)
         .map(({ node }) => (
             <Card
+                key={node.id || node.wordpress_id}
                 title={isBlogPost(node) ? node.title : node.fullTitle}
-                slug={isBlogPost(node) ? `blog/${node.slug}` : `sermons/${node.slug}`}
+                slug={isBlogPost(node) ? `blog/${node.slug}/` : `sermons/${node.slug}/`}
                 element={
                   isBlogPost(node)
                     ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-                    : getSermonExcerpt(node)
+                    : <SermonExcerpt sermon={node} />
                 }
             />
       ))}
@@ -114,7 +91,8 @@ export const pageQuery = graphql`
     allSermon {
         edges {
             node {
-                ...SermonOverview       
+                ...SermonOverview
+                id
             }
         }
     }
