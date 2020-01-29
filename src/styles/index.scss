@@ -52,6 +52,12 @@ html {
     .nice-transition {
       transition: all .25s cubic-bezier(.445,.05,.55,.95);
     }
+    .home-page__subnav {
+      li {
+        background: rgb(32,83,114);
+        color: white;
+      }
+    }
     footer {
       background:rgb(32,83,114);
     }
