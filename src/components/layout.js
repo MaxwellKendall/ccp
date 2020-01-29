@@ -7,10 +7,11 @@
 
 import React, { useCallback, useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 import { throttle } from "lodash"
 
 import Header from "./header"
+import Img from "gatsby-image"
 import "../styles/index.scss"
 
 const Layout = ({ onScroll, children }) => {
@@ -20,6 +21,13 @@ const Layout = ({ onScroll, children }) => {
         siteMetadata {
           title
           description
+        }
+      }
+      footerImg: file(relativePath: {eq: "ccp_logo.png"}) {
+        childImageSharp {
+          fluid(maxWidth: 150, quality: 100) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }
@@ -47,9 +55,14 @@ const Layout = ({ onScroll, children }) => {
         <main className="flex-grow">
           {children}
         </main>
-        <footer className="flex-shrink-0 text-center">
-          © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
+        <footer className="py-4 px-2 flex-shrink-0 flex items-center justify-center">
+          <Link className="w-2/5" to="/">
+            <Img fluid={data.footerImg.childImageSharp.fluid} />
+          </Link>
+          <p className="w-2/5 ml-auto py-4 text-white">
+            © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
           SC
+          </p>
         </footer>
       </div>
     </div>

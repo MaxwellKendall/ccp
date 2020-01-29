@@ -6,7 +6,6 @@ import cx from "classnames"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 
-
 import MenuSearch from "../icons/menuSearch"
 import SearchInput from "./searchInput"
 
