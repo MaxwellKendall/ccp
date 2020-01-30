@@ -83,7 +83,7 @@ module.exports = {
       }
     },
     {
-      resolve: 'gatsby-plugin-copy-gdrive-folder',
+      resolve: 'gatsby-plugin-copy-gdrive-folder2',
       options: {
         folderId: GOOGLE_DRIVE_FOLDER_ID,
         key: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
