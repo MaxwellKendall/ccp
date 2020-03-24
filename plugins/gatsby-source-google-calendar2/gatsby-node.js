@@ -22,17 +22,8 @@ const defaultOptions = {
     ]
 };
 const forbiddenChars = [',', '!', '#', '?', '.'];
-const fetchedLocations = []
 
-const getLongAndLat = (key, event, slug) => {
-    console.log("locations fetched", fetchedLocations);
-    const eventLocationString = slug.split('/')[1];
-    debugger;
-    if (fetchedLocations.some((loc) => loc.address === eventLocationString)) {
-        return Promise.resolve(fetchedLocations
-            .find((loc) => loc.address === eventLocationString)
-            .value);
-    }
+const getLongAndLat = (key, event) => {
     return googleMapsClient
         .geocode({
             params: {
@@ -43,23 +34,14 @@ const getLongAndLat = (key, event, slug) => {
         .then((data) => {
             const coordinates = data.data.results.find((result) => result.geometry.location);
             if (coordinates) {
-                fetchedLocations.push({
-                    address: eventLocationString,
-                    value: coordinates.geometry.location
-                });
                 return coordinates.geometry.location;
             }
             else {
-                fetchedLocations.push({
-                    address: eventLocationString,
-                    value: null
-                });
                 return null;
             }
         })
         .catch((e) => {
             console.log(`error fetching long and lat for ${event.location}: ${e}`);
-            fetchedLocations.push({ address: eventLocationString, value: null });
             return null;
         });
 };
@@ -139,37 +121,78 @@ exports.sourceNodes = async ({ actions }, options = defaultOptions) => {
         timeMin: timeMin,
         timeMax: timeMax
      });
+
+    const parseEventCoordinateString = (str) => str
+        .split(" ")
+        .map((word) => {
+            return word
+                .toLowerCase()
+                .split('')
+                .filter((char) => !forbiddenChars.includes(char))
+                .join('')
+        })
+        .join("-");
+
+    const getEventCoordinates = (events) => new Promise((resolve, reject) => {
+        const locationData = {};
+        events
+            .reduce((prevPromise, event, i, arr) => {
+                console.log("event", event);
+                if (!event.location) return Promise.resolve();
+                const eventLocationString = parseEventCoordinateString(event.location);
+                return prevPromise
+                    .then((data) => {
+                        if (data === 'init') {
+                            return getLongAndLat(geoCodeApiKey, event)
+                                .then((data) => {
+                                    locationData[eventLocationString] = data;
+                                });
+                        }
+                        if (Object.keys(locationData).includes(eventLocationString)) {
+                            if (i === arr.length - 1) {
+                                return resolve(locationData);
+                            }
+                            return Promise.resolve();
+                        }
+                        else {
+                            return getLongAndLat(geoCodeApiKey, event)
+                                .then((data) => {
+                                    locationData[eventLocationString] = data;
+                                    if (i === arr.length - 1) resolve(locationData);
+                                });
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(`some error: ${e}`);
+                        reject(e);
+                    });
+            }, Promise.resolve('init'));
+    });
   
     // Process data into nodes.
-    items
-        .map(async (event, i) => {
-            const eventSlug = getSlug(event);
-            if (event.location) {
-                return getLongAndLat(geoCodeApiKey, event, eventSlug)
-                    .then((longAndLat) => {
-                        console.log("long and lat", longAndLat);
-                        return {
-                            ...event,
-                            slug: eventSlug,
-                            geoCoordinates: longAndLat,
-                            internal: {
-                                contentDigest: event.updated,
-                                type: 'GoogleCalendarEvent'
-                            }
-                        };
-                    })
-            }
-            return {
-                ...event,
-                slug: eventSlug,
-                geoCoordinates: null,
-                internal: {
-                    contentDigest: event.updated,
-                    type: 'GoogleCalendarEvent'
-                }
-            };
+    getEventCoordinates(items)
+        .then((locationData) => {
+            items
+                .map((event) => {
+                    const eventSlug = getSlug(event);
+                    const eventCoordinateKey = event.location
+                        ? parseEventCoordinateString(event.location)
+                        : '';
+                    const longAndLat = Object.keys(locationData).includes(eventCoordinateKey)
+                        ? locationData[eventCoordinateKey]
+                        : null
+                    return {
+                        ...event,
+                        slug: eventSlug,
+                        geoCoordinates: longAndLat,
+                        internal: {
+                            contentDigest: event.updated,
+                            type: 'GoogleCalendarEvent'
+                        }
+                    };
+                })
+                .forEach(event => createNode(processEvents(event, includedFields)))
         })
-        .forEach(event => createNode(processEvents(event, includedFields)))
   
     // We're done, return.
     return
