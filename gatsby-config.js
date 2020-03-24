@@ -94,7 +94,7 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-source-google-calendar-events`,
+      resolve: `gatsby-source-google-calendar2`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         assumedUser: "info@ckendallart.com",
@@ -108,6 +108,7 @@ module.exports = {
           "location",
           "slug",
           "attachments",
+          "geoCoordinates"
         ],
         calendarId:
           "ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com",
