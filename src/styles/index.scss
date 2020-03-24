@@ -70,6 +70,14 @@ html {
         color: rgb(32,83,114);
       }
     }
+    .ccp-blog__container {
+      margin: 4rem;
+      .ccp-blog__content {
+          p {
+              padding: 1rem;
+          }
+      }
+    }
     footer {
       background:rgb(32,83,114);
     }
