@@ -27,7 +27,7 @@ const SearchInput = ({ submitSearch, placeHolder = searchPlaceholder }) => {
   return (
       <React.Fragment>
         <input
-        className="rounded-lg lg:hidden leading-loose p-2 text-black outline-none focus:border-gray-300 border-solid border"
+        className="rounded-lg leading-loose p-2 text-black outline-none focus:border-gray-300 border-solid border"
         type="text"
         value={searchString}
         onChange={handleInputChange}
