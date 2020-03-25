@@ -68,7 +68,7 @@ export default ({ data }) => {
         <ul className="m-0 flex items-center home-page__subnav">
           {subMenu.map((item, i) => (
             <li
-              className={`rounded text-center font-semibold px-2 py-6 m-0 w-full ${cx({ active: activeTab === camelCase(item)})}`}
+              className={`rounded text-center font-semibold w-full px-2 py-4 h-16 m-0 ${cx({ active: activeTab === camelCase(item)})}`}
               onClick={setActiveTab.bind(null, camelCase(item))}
               key={i}>
                 {item}
