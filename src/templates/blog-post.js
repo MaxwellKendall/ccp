@@ -6,8 +6,8 @@ export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node
   return (
     <Layout>
-      <div className="ccp-blog__container">
-        <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+      <div className="mx-4 mb-0 ccp-blog__container">
+        <h1 className="text-center my-4" dangerouslySetInnerHTML={{ __html: post.title }} />
         <div className="ccp-blog__content" dangerouslySetInnerHTML={{ __html: post.content }} />
       </div>
     </Layout>
