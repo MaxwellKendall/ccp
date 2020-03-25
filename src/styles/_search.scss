@@ -1,0 +1,23 @@
+.ccp-search-pg {
+    h1 {
+        text-align: center;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        svg {
+            color: black;
+        }
+        input::placeholder {
+            color: black;
+        }
+        .ccp-card {
+            @include for-tablet-landscape-up {
+                margin-right: auto;
+                margin-left: auto;
+            }
+        }
+    }
+}

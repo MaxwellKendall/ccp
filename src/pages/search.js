@@ -23,11 +23,6 @@ const isMatchingResult = (node, searchString) => {
     )
   }
 
-  console.log('node', get(node, 'fullTitle', ''));
-  console.log('bibleText', get(node, 'bibleText', ''))
-  console.log('speaker.displayName', get(node, 'speaker.displayName', ''))
-  console.log('series.title', get(node, 'series.title', ''))
-
   return (
     get(node, 'fullTitle', '').toLowerCase().includes(searchString.toLowerCase()) ||
     (node.bibleText && get(node, 'bibleText', '').toLowerCase().includes(searchString.toLowerCase())) ||
@@ -61,11 +56,25 @@ export default ({
 
   const submitSearch = (str) => setSearchString(str)
 
+  const { sermons, blogs, total } = results
+    .reduce((acc, result) => {
+      if (isBlogPost(result.node)) return { ...acc, blogs: acc.blogs + 1, total: acc.total + 1 };
+      return { ...acc, sermons: acc.sermons + 1, total: acc.total + 1 }
+    }, { sermons: 0, blogs: 0, total: 0});
+
   return (
-    <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
+    <Layout classNames="ccp-search-pg mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="Search Results" />
       <h1>Search Results</h1>
-      <SearchInput submitSearch={submitSearch} />
+      <div className="flex justify-center w-1/2 pb-4">
+        <SearchInput
+          submitOnType
+          classNames="w-1/2"
+          submitSearch={submitSearch}
+          initialSearchString={defaultSearchString}
+          placeHolder="Search Sermons and Blogs..." />
+      </div>
+      <span className="justify-center flex text-center py-4">{`${sermons} sermons, ${blogs} blogs, (${total} total)`}</span>
       {slice(results, 0, endIndex)
         .map(({ node }) => (
             <Card

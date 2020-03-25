@@ -1,15 +1,22 @@
-import React, { useState } from "react"
-
+import React, { useState, useEffect } from "react"
+import { debounce } from "lodash"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 
 const searchPlaceholder = "Sermons / Blogs"
 
-const SearchInput = ({ submitSearch, placeHolder = searchPlaceholder }) => {
-  const [searchString, setSearchString] = useState("")
+const SearchInput = ({
+    submitSearch,
+    placeHolder = searchPlaceholder,
+    classNames,
+    submitOnType = false,
+    initialSearchString = ""
+}) => {
+  const [searchString, setSearchString] = useState(initialSearchString)
 
-  const handleSubmit = () => {
-      submitSearch(searchString)
+  const handleSubmit = (str = searchString) => {
+      console.log(str)
+      submitSearch(str)
   }
     
   const handleSearch = (e) => {
@@ -22,12 +29,15 @@ const SearchInput = ({ submitSearch, placeHolder = searchPlaceholder }) => {
   const handleInputChange = (e) => {
     e.preventDefault()
     setSearchString(e.target.value)
+    if (submitOnType) {
+      debounce(() => handleSubmit(e.target.value), 250)();
+    }
   }
   
   return (
       <React.Fragment>
         <input
-        className="rounded-lg leading-loose p-2 text-black outline-none focus:border-gray-300 border-solid border"
+        className={`rounded-lg leading-loose p-2 text-black outline-none focus:border-gray-300 border-solid border ${classNames}`}
         type="text"
         value={searchString}
         onChange={handleInputChange}
