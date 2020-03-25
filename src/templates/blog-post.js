@@ -7,7 +7,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div className="ccp-blog__container">
-        <h1>{post.title}</h1>
+        <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
         <div className="ccp-blog__content" dangerouslySetInnerHTML={{ __html: post.content }} />
       </div>
     </Layout>
