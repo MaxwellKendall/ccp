@@ -53,11 +53,11 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
 
   return (
     <header ref={ref} className="p-4 fixed w-full left-0 top-0 flex flex-row items-center justify-start">
-      <Link className="w-5/6 md:w-11/12 flex flex-col self-start md:ml-2" to="/">
-        <Img className="align-middle" fluid={data.file.childImageSharp.fluid} />
+      <Link className="w-5/6 md:w-1/2 flex flex-col self-start md:ml-2" to="/">
+        <Img className="align-middle max-w-xs" fluid={data.file.childImageSharp.fluid} />
       </Link>
-      <span className="my-0 hidden md:flex text-white md:ml-8 text-center italic">{siteDescription}</span>
-      <MenuSearch buttonClassName="ml-auto" isNavVisible={isNavVisible} toggleNav={toggleNav} />
+      <span className="my-0 hidden md:flex text-white md:ml-8 text-center italic md:ml-auto">{siteDescription}</span>
+      <MenuSearch buttonClassName="ml-auto md:ml-4" isNavVisible={isNavVisible} toggleNav={toggleNav} />
       <ul style={{ marginTop: headerHeight, width: '310px' }} className={cx(`ccp-nav flex flex-col text-center flex-center items-center`, { 'show-nav': isNavVisible })}>
         <li className="cursor-pointer mb-8 mt-4"><span className="my-0 flex text-white text-center italic">{siteDescription}</span></li>
         <li className="cursor-pointer py-6 w-full border-white my-0">
