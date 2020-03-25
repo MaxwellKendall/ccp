@@ -30,7 +30,7 @@ export default ({ data }) => {
   return (
     <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="Christ Church Presbyterian Sermons" />
-      <h1>Sermons</h1>
+      <h1 className="text-center my-4">Sermons</h1>
       {slice(data.allSermon.edges, 0, endIndex)
         .map(({ node }) => (
           <Card

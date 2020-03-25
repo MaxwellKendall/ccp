@@ -39,7 +39,7 @@ const Carousel = ({ data, totalSlides }) => {
   })
   
   return (
-    <div ref={carousel}>
+    <div ref={carousel} className="w-full">
       <CarouselProvider
         className="w-full"
         naturalSlideHeight={1}

@@ -8,7 +8,7 @@ export default ({ data }) => {
   return (
     <Layout className="mx-auto flex flex-col py-10 px-5">
       <SEO title="blog" />
-      <h1>Doctrine for Life</h1>
+      <h1 className="text-center my-4">Doctrine for Life</h1>
       {data.allWordpressPost.edges.map(({ node }) => (
         <Card
           title={node.title}

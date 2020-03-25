@@ -65,7 +65,7 @@ export default ({
   return (
     <Layout classNames="ccp-search-pg mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="Search Results" />
-      <h1>Search Results</h1>
+      <h1 className="text-center my-4">Search Results</h1>
       <div className="flex justify-center w-1/2 pb-4">
         <SearchInput
           submitOnType

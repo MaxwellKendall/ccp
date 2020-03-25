@@ -54,7 +54,7 @@ const Layout = ({ onScroll, children, classNames }) => {
     <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`${classNames} h-full bg-gray-200`}>
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
       <div style={{ paddingTop: headerHeight }} className="flex flex-col h-full">
-        <main className="flex-grow">
+        <main className="flex-grow flex items-center flex-col justify-center">
           {children}
         </main>
         <footer className="flex flex-col items-center justify-center flex-shrink-0 py-4 px-2">
