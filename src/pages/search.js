@@ -63,7 +63,7 @@ export default ({
     }, { sermons: 0, blogs: 0, total: 0});
 
   return (
-    <Layout classNames="ccp-search-pg mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
+    <Layout classNames="ccp-search-pg" onScroll={handleScroll}>
       <SEO title="Search Results" />
       <h1 className="text-center my-4">Search Results</h1>
       <div className="flex justify-center w-1/2 pb-4">

@@ -15,7 +15,6 @@ const SearchInput = ({
   const [searchString, setSearchString] = useState(initialSearchString)
 
   const handleSubmit = (str = searchString) => {
-      console.log(str)
       submitSearch(str)
   }
     
@@ -30,7 +29,7 @@ const SearchInput = ({
     e.preventDefault()
     setSearchString(e.target.value)
     if (submitOnType) {
-      debounce(() => handleSubmit(e.target.value), 250)();
+      debounce((value) => handleSubmit(value), 250)(e.target.value);
     }
   }
   
