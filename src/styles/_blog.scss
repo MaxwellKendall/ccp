@@ -606,34 +606,70 @@ article,
     content: "";
   }
 
-  .has-text-align-center {
-    display: block;
-    width: 100%;
-    margin: auto;
+// CUSTOM BLOG STYLES:
+.ccp-blog__container {
+  margin: .5rem;
+  @include for-tablet-landscape-up {
+    margin: 4rem;
+  }
+  h1 {
     text-align: center;
   }
-
-.wp-block-media-text {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  @include for-tablet-landscape-up {
-    flex-direction: row;
-  }
-  figure {
-    align-self: center;
-    width: 100%;
-    height: 100%;
-  }
-  .wp-block-media-text__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1rem;
-
-    p {
-      font-size: 1.8rem;
-      line-height: 2.15rem;
+  .ccp-blog__content {
+    // general paragraphs
+      p {
+          padding: 1rem;
+      }
+    
+    // foot notes
+      ol {
+        margin: 2rem;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        li {
+          list-style-type: decimal;
+        }
+      }
+    
+    // mostly quotations I believe.
+    .has-text-align-center {
+      display: block;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+    }
+  
+    // featured text/media
+    .wp-block-media-text {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      @include for-tablet-landscape-up {
+        flex-direction: row;
+      }
+      figure {
+        align-self: center;
+        width: 100%;
+        height: 100%;
+        @include for-tablet-landscape-up {
+          padding-right: 6rem;
+        }
+      }
+      .wp-block-media-text__content {
+        @include for-tablet-landscape-up {
+          width: 25%;
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;    
+        p {
+          font-size: 1.8rem;
+          line-height: 2.15rem;
+        }
+      }
     }
   }
 }

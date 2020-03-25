@@ -103,30 +103,6 @@ html {
         }
       }
     }
-    .ccp-blog__container {
-      margin: .5rem;
-      @include for-tablet-landscape-up {
-        margin: 4rem;
-      }
-      h1 {
-        text-align: center;
-      }
-      .ccp-blog__content {
-          p {
-              padding: 1rem;
-          }
-          ol {
-            margin: 2rem;
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            justify-content: center;
-            li {
-              list-style-type: decimal;
-            }
-          }
-      }
-    }
     footer {
       background:rgb(32,83,114);
     }
