@@ -25,7 +25,7 @@ const Layout = ({ onScroll, children, classNames }) => {
           description
         }
       }
-      footerImg: file(relativePath: {eq: "ccp_logo.png"}) {
+      footerImg: file(relativePath: {eq: "ccp_favicon.png"}) {
         childImageSharp {
           fluid(maxWidth: 150, quality: 100) {
             ...GatsbyImageSharpFluid
@@ -57,18 +57,19 @@ const Layout = ({ onScroll, children, classNames }) => {
         <main className="flex-grow flex items-center flex-col justify-center">
           {children}
         </main>
-        <footer className="flex flex-col items-center justify-center flex-shrink-0 py-4 px-2">
-          <div className="flex items-center justify-center w-full pb-8">
-            <Link className="mr-auto w-2/4" to="/">
+        <footer className="flex items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">
+          <div className="flex items-center justify-start px-8 w-1/3">
+            {/* <Link className="mr-auto w-2/4" to="/">
               <Img fluid={data.footerImg.childImageSharp.fluid} />
-            </Link>
-            <div className="w-1/4">
+            </Link> */}
+            <div className="md:w-auto">
               <a href="https://www.facebook.com/christchurchcharleston" className="mr-2"><FontAwesomeIcon icon={faFacebook} color="white" size="lg" /></a>
               <a href="https://www.instagram.com/christchurchcharleston/"><FontAwesomeIcon icon={faInstagram} color="white" size="lg" /></a>
               <a href="https://www.facebook.com/christchurchcharleston" className="ml-2"><FontAwesomeIcon icon={faMailchimp} color="white" size="lg" /></a>
             </div>
           </div>
-            <p className="text-white text-center w-full">
+          <p className="md:w-1/3 text-center text-white">SDG</p>
+            <p className="text-white text-right px-8 md:w-1/3">
               © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
             SC
             </p>

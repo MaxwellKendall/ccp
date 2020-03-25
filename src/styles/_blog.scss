@@ -608,22 +608,23 @@ article,
 
 // CUSTOM BLOG STYLES:
 .ccp-blog__container {
-  margin: .5rem;
-  @include for-tablet-landscape-up {
-    margin: 4rem;
-  }
+  max-width: 780px;
   h1 {
     text-align: center;
+    font-size: 40px;
+    @include for-tablet-landscape-up {
+      font-size: 82px;
+    }
   }
   .ccp-blog__content {
     // general paragraphs
       p {
-          padding: 1rem;
+          padding: 1rem 0rem;
+          font-size: 20px;
       }
     
     // foot notes
       ol {
-        margin: 2rem;
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -652,12 +653,12 @@ article,
       figure {
         align-self: center;
         @include for-tablet-landscape-up {
-          width: 50%;
+          width: 55%;
         }
       }
       .wp-block-media-text__content {
         @include for-tablet-landscape-up {
-          width: 25%;
+          width: 45%;
         }
         display: flex;
         justify-content: center;
