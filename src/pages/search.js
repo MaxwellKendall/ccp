@@ -18,16 +18,21 @@ const isBlogPost = (node) => {
 const isMatchingResult = (node, searchString) => {
   if (isBlogPost(node)) {
     return (
-      node.title.includes(searchString) ||
-      node.excerpt.includes(searchString)
+      get(node, 'title', '').toLowerCase().includes(searchString.toLowerCase()) ||
+      get(node, 'excerpt', '').toLowerCase().includes(searchString.toLowerCase())
     )
   }
 
+  console.log('node', get(node, 'fullTitle', ''));
+  console.log('bibleText', get(node, 'bibleText', ''))
+  console.log('speaker.displayName', get(node, 'speaker.displayName', ''))
+  console.log('series.title', get(node, 'series.title', ''))
+
   return (
-    node.fullTitle.includes(searchString) ||
-    node.bibleText.includes(searchString) ||
-    node.speaker.displayName.includes(searchString) ||
-    get(node, 'node.series.title', '').includes(searchString)
+    get(node, 'fullTitle', '').toLowerCase().includes(searchString.toLowerCase()) ||
+    (node.bibleText && get(node, 'bibleText', '').toLowerCase().includes(searchString.toLowerCase())) ||
+    get(node, 'speaker.displayName', '').toLowerCase().includes(searchString.toLowerCase()) ||
+    get(node, 'series.title', '').toLowerCase().includes(searchString.toLowerCase())
   )
 }
 
