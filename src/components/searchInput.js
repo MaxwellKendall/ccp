@@ -13,11 +13,15 @@ const SearchInput = ({
     initialSearchString = ""
 }) => {
   const [searchString, setSearchString] = useState(initialSearchString)
-
+  
   const handleSubmit = (str = searchString) => {
-      submitSearch(str)
+    submitSearch(str)
   }
-    
+  
+  const handleClick = (e) => {
+    handleSubmit();
+  }
+  
   const handleSearch = (e) => {
     e.preventDefault()
     if(e.keyCode === 13) {
@@ -42,7 +46,7 @@ const SearchInput = ({
         onChange={handleInputChange}
         onKeyUp={handleSearch}
         placeholder={placeHolder} />
-        <button tabIndex="0" onClick={handleSubmit}>
+        <button tabIndex="0" onClick={handleClick}>
             <FontAwesomeIcon icon={faSearch} color="white" className="ml-2" size="lg" />
         </button>
       </React.Fragment>

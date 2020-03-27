@@ -44,7 +44,9 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
   
   const getIcon = () => isAboutExpanded ? faChevronUp : faChevronDown;
 
-  const submitSearch = (str) => {
+  const submitSearch = (str, _) => {
+    debugger;
+    console.log("submit search", str);
     navigate('/search', {
       state: {
         searchString: str

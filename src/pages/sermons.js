@@ -2,11 +2,10 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import moment from "moment"
 import Img from "gatsby-image"
-import { slice } from "lodash"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Card from "../components/card"
+import SearchResults from "../components/searchResults"
 import { useInfiniteScroll } from "../helpers/hooks"
 
 export const SermonExcerpt = 
@@ -26,20 +25,20 @@ export const SermonExcerpt =
 )
 
 export default ({ data }) => {
-  const [endIndex, _, handleScroll] = useInfiniteScroll(100)
+  const [endIndex, setEndIndex, handleScroll] = useInfiniteScroll(100)
+  const [searchString, setSearchString] = useState('')
+
   return (
     <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="Christ Church Presbyterian Sermons" />
       <h1 className="text-center my-4">Sermons</h1>
-      {slice(data.allSermon.edges, 0, endIndex)
-        .map(({ node }) => (
-          <Card
-            key={node.id}
-            title={node.fullTitle}
-            slug={`sermons/${node.slug}`}>
-              <SermonExcerpt sermon={node} />
-            </Card>
-        ))}
+      <SearchResults
+        submitOnType
+        data={data.allSermon.edges}
+        searchString={searchString}
+        setSearchString={setSearchString}
+        endIndex={endIndex}
+        setEndIndex={setEndIndex} />
     </Layout>
   )
 }

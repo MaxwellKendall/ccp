@@ -1,21 +1,27 @@
-import React from "react"
-import { graphql, Link } from "gatsby"
+import React, { useState } from "react"
+import { graphql } from "gatsby"
+
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Card from "../components/card"
+import SearchResults from "../components/searchResults"
+
+import { useInfiniteScroll } from "../helpers/hooks"
 
 export default ({ data }) => {
+  const [endIndex, setEndIndex, handleScroll] = useInfiniteScroll(100)
+  const [searchString, setSearchString] = useState('')
+
   return (
-    <Layout className="mx-auto flex flex-col py-10 px-5">
+    <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
       <SEO title="blog" />
       <h1 className="text-center my-4">Doctrine for Life</h1>
-      {data.allWordpressPost.edges.map(({ node }) => (
-        <Card
-          title={node.title}
-          slug={`blog/${node.slug}`}>
-            <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-        </Card>
-      ))}
+      <SearchResults
+        submitOnType
+        data={data.allWordpressPost.edges}
+        searchString={searchString}
+        setSearchString={setSearchString}
+        endIndex={endIndex}
+        setEndIndex={setEndIndex} />
     </Layout>
   )
 }
@@ -28,6 +34,7 @@ export const pageQuery = graphql`
           title
           excerpt
           slug
+          wordpress_id
         }
       }
     }
