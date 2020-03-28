@@ -2,7 +2,7 @@ CCP v2
 
 - [x] Sermons
 - [x] Search
-- [ ] Mobile Responsiveness
+- [x] Mobile Responsiveness
 - [ ] Podcasts w/ RSS link
 - [x] Blog w/ Headless CMS
 - [x] Calendar

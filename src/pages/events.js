@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import moment from "moment"
-import { graphql, navigate } from "gatsby"
+import { graphql, navigate, Link } from "gatsby"
 import Loadable from 'react-loadable'
+import cx from 'classnames'
 
 import Layout from "../components/layout"
+import Card from "../components/card"
 
 const getClassByEventSummary = (event, selectedDate) => {
   if (moment(event.start.dateTime) === selectedDate) {
@@ -18,7 +20,7 @@ const getClassByEventSummary = (event, selectedDate) => {
   return 'ccp-event';
 };
 
-const loading = () => <p>Loading...</p>;
+const loading = () => <p>Loading...</p>
 
 const Calendar = Loadable({
   loader: () => import("../components/calendar"),
@@ -47,28 +49,52 @@ export default ({ data }) => {
       : null,
     slug: edge.node.slug
   }))
+
+  useEffect(() => {
+    data.allGoogleCalendarEvent.edges
+      .filter((event) => event.node.geoCoordinates)
+      .forEach((event) => {
+        const { slug } = event.node
+        const { lat, lng } = event.node.geoCoordinates
+        const myLatlng = new window.google.maps.LatLng(lat, lng);
+
+        new window.google.maps.Map(document.getElementById(slug), {
+          center: myLatlng,
+          zoom: 8
+        })
+      })
+  }, [])
   
   return (
     <Layout>
-      <Calendar
+      {/* <Calendar
         dateClick={handleDateClick}
         eventClick={handleEventClick}
-        events={events} />
+        events={events} /> */}
 
-      {/* {data.allGoogleCalendarEvent.edges.map(edge => {
+      {data.allGoogleCalendarEvent.edges.map(edge => {
         const event = edge.node
+        const startAndEndTime = `${moment(event.start.dateTime).format("hh:mm A")} - ${moment(
+          event.end.dateTime
+        ).format("hh:mm A")}`
+        const duration = moment.duration(moment(event.end.dateTime).diff(moment(event.start.dateTime))).humanize()
+        const date = `${moment(event.start.dateTime).format('dddd MMMM Do, YYYY')}`
+        const isLordsDay = date.includes('Sunday');
+
         return (
-          <Link to={`events/${event.slug}`}>
-            <h1>Event Title: {event.summary}</h1>
-            <h2>
-              Event Time:{" "}
-              {`${moment(event.start.dateTime).format("LLLL")} - ${moment(
-                event.end.dateTime
-              ).format("LT")} (approx.)`}
-            </h2>
-          </Link>
+          <Card slug={`events/${event.slug}`} title={date} className={cx({ 'is-lords-day': isLordsDay })}>
+            <div>
+              <div className="py-4 flex items-center justify-start">
+                <h3 className="m-0">{event.summary}</h3>
+              </div>
+              <p>{event.location}</p>
+              <p>{`${startAndEndTime} (approximately ${duration})`}</p>
+              <p>{event.description}</p>
+              <div className="map" id={`${event.slug}`} />
+            </div>
+          </Card>
         )
-      })} */}
+      })}
     </Layout>
   )
 }
@@ -82,6 +108,7 @@ export const query = graphql`
           slug
           start {
             dateTime
+            date
           }
           end {
             dateTime
@@ -91,6 +118,10 @@ export const query = graphql`
           status
           attachments {
             fileUrl
+          }
+          geoCoordinates {
+            lat
+            lng
           }
         }
       }
