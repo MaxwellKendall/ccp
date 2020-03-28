@@ -58,7 +58,7 @@ const Layout = ({ onScroll, children, classNames }) => {
           {children}
         </main>
         <footer className="flex items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">
-          <div className="flex items-center justify-start px-8 w-1/3">
+          <div className="flex px-8 items-center justify-center md:justify-start md:w-1/3">
             {/* <Link className="mr-auto w-2/4" to="/">
               <Img fluid={data.footerImg.childImageSharp.fluid} />
             </Link> */}
@@ -69,7 +69,7 @@ const Layout = ({ onScroll, children, classNames }) => {
             </div>
           </div>
           <p className="md:w-1/3 text-center text-white">SDG</p>
-            <p className="text-white text-right px-8 md:w-1/3">
+            <p className="text-white text-center lg:text-right px-8 md:w-1/3">
               © {new Date().getFullYear()}, Christ Church Presbyterian, Charleston
             SC
             </p>
