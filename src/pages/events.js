@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react"
 import moment from "moment"
 import { graphql, navigate, Link } from "gatsby"
@@ -50,20 +51,20 @@ export default ({ data }) => {
     slug: edge.node.slug
   }))
 
-  useEffect(() => {
-    data.allGoogleCalendarEvent.edges
-      .filter((event) => event.node.geoCoordinates)
-      .forEach((event) => {
-        const { slug } = event.node
-        const { lat, lng } = event.node.geoCoordinates
-        const myLatlng = new window.google.maps.LatLng(lat, lng);
+  // useEffect(() => {
+  //   data.allGoogleCalendarEvent.edges
+  //     .filter((event) => event.node.geoCoordinates)
+  //     .forEach((event) => {
+  //       const { slug } = event.node
+  //       const { lat, lng } = event.node.geoCoordinates
+  //       const myLatlng = new window.google.maps.LatLng(lat, lng);
 
-        new window.google.maps.Map(document.getElementById(slug), {
-          center: myLatlng,
-          zoom: 8
-        })
-      })
-  }, [])
+  //       new window.google.maps.Map(document.getElementById(slug), {
+  //         center: myLatlng,
+  //         zoom: 8
+  //       })
+  //     })
+  // }, [])
   
   return (
     <Layout>
