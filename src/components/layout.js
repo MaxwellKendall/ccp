@@ -53,15 +53,11 @@ const Layout = ({ onScroll, children, classNames }) => {
   return (
     <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`${classNames} h-full bg-gray-200`}>
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
-      <div style={{ paddingTop: headerHeight }} className="flex flex-col h-full">
-        <main className="flex-grow flex items-center flex-col justify-center">
+        <main style={{ paddingTop: `${headerHeight}px` }} className="flex-grow flex items-center flex-col justify-center">
           {children}
         </main>
         <footer className="flex items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">
           <div className="flex px-8 items-center justify-center md:justify-start md:w-1/3">
-            {/* <Link className="mr-auto w-2/4" to="/">
-              <Img fluid={data.footerImg.childImageSharp.fluid} />
-            </Link> */}
             <div className="md:w-auto">
               <a href="https://www.facebook.com/christchurchcharleston" className="mr-2"><FontAwesomeIcon icon={faFacebook} color="white" size="lg" /></a>
               <a href="https://www.instagram.com/christchurchcharleston/"><FontAwesomeIcon icon={faInstagram} color="white" size="lg" /></a>
@@ -75,7 +71,6 @@ const Layout = ({ onScroll, children, classNames }) => {
             </p>
         </footer>
       </div>
-    </div>
   )
 }
 

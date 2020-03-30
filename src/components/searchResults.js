@@ -38,7 +38,7 @@ export default ({
 
   return (
       <>
-        <div className="flex justify-center w-1/2 pb-4">
+        <div className="flex justify-center w-11/12 md:w-1/2 pb-4">
             <SearchInput
                 submitOnType={submitOnType}
                 classNames="w-1/2"
