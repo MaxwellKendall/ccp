@@ -31,6 +31,7 @@ html {
     #gatsby-focus-wrapper {
       height: 100%;
     }
+    // I. HEADER
     header {
       background: rgb(32,83,114);
       z-index: 50;
@@ -58,6 +59,7 @@ html {
     .nice-transition {
       transition: all .25s cubic-bezier(.445,.05,.55,.95);
     }
+    // II. HOME PAGE
     .home-page__subnav {
       li {
         color: rgb(32,83,114)
@@ -104,8 +106,16 @@ html {
         }
       }
     }
+    // III. FOOTER
     footer {
       background:rgb(32,83,114);
+    }
+    
+    // IV. EVENTS PAGE
+    .is-lords-day {
+      .ccp-card__container {
+        // border: 1px solid blue;
+      }
     }
   }
 }
