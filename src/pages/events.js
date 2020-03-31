@@ -120,10 +120,6 @@ export const query = graphql`
           attachments {
             fileUrl
           }
-          geoCoordinates {
-            lat
-            lng
-          }
         }
       }
     }
