@@ -6,7 +6,7 @@ export default ({ data }) => {
   const sermon = data.allSermon.edges[0].node
   return (
     <Layout>
-      <div>
+      <div className="md:py-4">
         <h1>Sermon Title: {sermon.fullTitle}</h1>
         <h2>Speaker: {sermon.speaker.displayName}</h2>
         <p>Download Count: {sermon.downloadCount} </p>

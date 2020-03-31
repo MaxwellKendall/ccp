@@ -7,7 +7,7 @@ export default ({ data }) => {
   const event = data.allGoogleCalendarEvent.edges[0].node
   return (
     <Layout>
-      <div>
+      <div className="md:py-4">
         <h1>Event Title: {event.summary}</h1>
         <h2>
           Event Time:{" "}
