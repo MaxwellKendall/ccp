@@ -16,7 +16,7 @@ import Header from "./header"
 import Img from "gatsby-image"
 import "../styles/index.scss"
 
-const Layout = ({ onScroll, children, classNames }) => {
+const Layout = ({ onScroll, children, classNames = '' }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -51,9 +51,9 @@ const Layout = ({ onScroll, children, classNames }) => {
   }, [measuredRef, ref])
 
   return (
-    <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`${classNames} h-full bg-gray-200`}>
+    <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`h-full bg-gray-200`}>
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
-        <main style={{ paddingTop: `${headerHeight}px` }} className="h-full flex-grow flex items-center flex-col justify-center md:justify-start">
+        <main style={{ paddingTop: `${headerHeight}px` }} className={`flex-grow flex items-center flex-col justify-center md:justify-start ${classNames} `}>
           {children}
         </main>
         <footer className="flex items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">

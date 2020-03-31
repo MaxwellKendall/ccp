@@ -24,11 +24,11 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        <script>
+        {/* <script>
           function initMap() { console.log('init') };
         </script>
         <script async defer src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBToFkRZ9mhIQYJA_wCZsgI_AFKQUbCTmg&callback=initMap`}>
-        </script>
+        </script> */}
       </body>
     </html>
   )
