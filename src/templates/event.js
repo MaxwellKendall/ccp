@@ -9,8 +9,8 @@ export default ({ data }) => {
   useEffect(() => {
     const event = data.allGoogleCalendarEvent.edges[0].node
     const { slug } = event
-    const { lat, lng } = event.geoCoordinates
-    const myLatlng = new window.google.maps.LatLng(lat, lng);
+    // const { lat, lng } = event.geoCoordinates
+    // const myLatlng = new window.google.maps.LatLng(lat, lng);
 
     // new window.google.maps.Map(document.getElementById(slug), {
     //   center: myLatlng,
@@ -59,10 +59,6 @@ export const query = graphql`
           attachments {
             fileUrl
             title
-          }
-          geoCoordinates {
-            lat
-            lng
           }
         }
       }
