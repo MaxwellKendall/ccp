@@ -7,6 +7,7 @@ import cx from 'classnames'
 
 import Layout from "../components/layout"
 import Card from "../components/card"
+import SEO from "../components/seo"
 
 const getClassByEventSummary = (event, selectedDate) => {
   if (moment(event.start.dateTime) === selectedDate) {
@@ -72,7 +73,7 @@ export default ({ data }) => {
         dateClick={handleDateClick}
         eventClick={handleEventClick}
         events={events} /> */}
-
+      <SEO title="Christ Church Presbyterian Events" />
       {data.allGoogleCalendarEvent.edges.map(edge => {
         const event = edge.node
         const startAndEndTime = `${moment(event.start.dateTime).format("hh:mm A")} - ${moment(

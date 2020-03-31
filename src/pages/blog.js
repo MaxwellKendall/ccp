@@ -13,7 +13,7 @@ export default ({ data }) => {
 
   return (
     <Layout classNames="mx-auto flex flex-col py-10 px-5 min-h-full my-2" onScroll={handleScroll}>
-      <SEO title="blog" />
+      <SEO title="Doctrine for Life" />
       <h1 className="text-center my-4">Doctrine for Life</h1>
       <SearchResults
         submitOnType
