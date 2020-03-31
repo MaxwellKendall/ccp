@@ -67,7 +67,7 @@ export default ({ data }) => {
   // }, [])
   
   return (
-    <Layout>
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 my-2 min-h-full">
       {/* <Calendar
         dateClick={handleDateClick}
         eventClick={handleEventClick}

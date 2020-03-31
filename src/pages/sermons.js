@@ -11,16 +11,18 @@ import { useInfiniteScroll } from "../helpers/hooks"
 export const SermonExcerpt = 
 ({ sermon }) => (
   <React.Fragment>
-    <div className="flex items-center justify-center md:justify-start flex-col md:flex-row pb-2">
+    {sermon.series && sermon.series.title && <strong className="flex justify-center">{sermon.series.title}</strong>}
+    <strong className="flex justify-center">{sermon.bibleText}</strong>
+    <div className="flex items-center justify-center flex-col md:flex-row py-4">
       <Img 
         style={{ height: '50px', width: '50px' }}
         fluid={{
           src: sermon.speaker.roundedThumbnailImageURL
         }} />
-      <strong className="pl-2 text-center md:text-left">{`${sermon.speaker.displayName} on ${sermon.bibleText}; preached ${moment(sermon.preachDate).format('LL')}.`}
-      </strong>
+      <strong className="pl-2 text-center md:text-left">{sermon.speaker.displayName}</strong>
     </div>
-    <span className="italic">{`Downloaded ${sermon.downloadCount} times.`}</span>
+    <strong className="flex justify-center">{moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}</strong>
+    <span className="flex justify-center">{`Downloaded ${sermon.downloadCount} times.`}</span>
   </React.Fragment>
 )
 
@@ -29,7 +31,7 @@ export default ({ data }) => {
   const [searchString, setSearchString] = useState('')
 
   return (
-    <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 min-h-full my-2" onScroll={handleScroll}>
       <SEO title="Christ Church Presbyterian Sermons" />
       <h1 className="text-center my-4">Sermons</h1>
       <SearchResults
