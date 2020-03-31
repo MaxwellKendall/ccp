@@ -12,7 +12,7 @@ export default ({ data }) => {
   const [searchString, setSearchString] = useState('')
 
   return (
-    <Layout className="mx-auto flex flex-col py-10 px-5" onScroll={handleScroll}>
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 h-full" onScroll={handleScroll}>
       <SEO title="blog" />
       <h1 className="text-center my-4">Doctrine for Life</h1>
       <SearchResults

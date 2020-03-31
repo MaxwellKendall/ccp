@@ -5,7 +5,7 @@ import { graphql } from "gatsby"
 export default ({ data }) => {
   const sermon = data.allSermon.edges[0].node
   return (
-    <Layout>
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 h-full">
       <div className="md:py-4">
         <h1>Sermon Title: {sermon.fullTitle}</h1>
         <h2>Speaker: {sermon.speaker.displayName}</h2>

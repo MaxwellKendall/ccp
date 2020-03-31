@@ -19,7 +19,7 @@ export default ({ data }) => {
   }, [])
 
   return (
-    <Layout classNames="h-full">
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 h-full">
       <div className="md:py-4">
         <h1>{event.summary}</h1>
         <h2>
