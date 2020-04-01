@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { slice, get } from "lodash"
+import Highlighter from "react-highlight-words";
 
 import Card from "./card"
 import SearchInput from "./searchInput"
@@ -34,8 +35,6 @@ export default ({
 
   const submitSearch = (str) => setSearchString(str)
 
-  console.log("results", results)
-
   return (
       <>
         <div className="flex justify-center w-11/12 md:w-1/2 pb-4">
@@ -48,16 +47,25 @@ export default ({
         </div>
         <span className="justify-center flex text-center py-4">{`${results.length} matching, out of ${data.length} total`}</span>
         {slice(results, 0, endIndex)
-            .map(({ node }) => (
+            .map(({ node }) => {
+              const isBlog = isBlogPost(node)
+              const cleanExcerpt = 
+              return (
                 <Card
                     key={node.id || node.wordpress_id}
-                    title={isBlogPost(node) ? node.title : node.fullTitle}
-                    slug={isBlogPost(node) ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>
-                    {isBlogPost(node)
+                    title={<Highlighter
+                        highlightClassName="highlight-search-result"
+                        searchWords={searchString.split(' ')}
+                        autoEscape={true}
+                        textToHighlight={isBlog ? node.title : node.fullTitle} />}
+                    slug={isBlog ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>
+                    {isBlog
                         ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
                         : <SermonExcerpt sermon={node} />}
                 </Card>
-        ))}
+              );
+            }) 
+        }
         </>
   )
 }
