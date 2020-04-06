@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Daily Deployment
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  schedule:
+    # * 12:45 PM EST / 16:45 UTC
+    - cron:  '45 16'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Push to Master
+      uses: actions-go/push@v1
+      with:
+        # Override the existing remote branch if it already exist
+        # force: true
+        # The email that will appear in commits when changes needs to be committed
+        # author-email: daily-deploy @github.com# optional, default is actions-go@users.noreply.github.com
+        # The name that will appear in commits when changes needs to be committed
+        # author-name: # optional, default is ActionsGo Bot
+        # Instructs to create a commit with changed files
+        # create-commit: # optional, default is true
+        # A coma separated list of files to add to commit in addition to already staged ones. If not provided, all tracked files are committed.
+        # commit-files: # optional
+        # The commit message used when changes needs to be committed
+        commit-message: daily-deploy
+        # The name of the local reference to push.
+        ref: master
+        # The name of the remote on which to push the changes. Defaults to the tracked remote
+        # remote: # optional, default is origin
+        # The name of the remote reference to pushto. Defaults to the tracked remote branch.
+        remote-ref: master
+        # Fail the action in case there is nothing to do.
+        # fail-if-empty: # optional
+        # Auth token used to fetch the repository. The token is stored in the local git config, which enables your scripts to run authenticated git commands. The post-job step removes the token from the git config. [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+
+        token: ${{ secrets.ACCESS_TOKEN }}
