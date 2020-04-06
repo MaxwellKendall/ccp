@@ -38,7 +38,7 @@ jobs:
         # The commit message used when changes needs to be committed
         commit-message: daily-deploy
         # The name of the local reference to push.
-        ref: master
+        # ref: master
         # The name of the remote on which to push the changes. Defaults to the tracked remote
         # remote: # optional, default is origin
         # The name of the remote reference to push to. Defaults to the tracked remote branch.
