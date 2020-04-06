@@ -7,7 +7,7 @@ name: Daily Deployment
 on:
   schedule:
     # 12:45 PM EST / 16:45 UTC
-    - cron: '15 17 * * *'
+    - cron: '00 12 * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
