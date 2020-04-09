@@ -49,15 +49,11 @@ export default ({
         {slice(results, 0, endIndex)
             .map(({ node }) => {
               const isBlog = isBlogPost(node)
-              const cleanExcerpt = 
+              console.log("node", node)
               return (
                 <Card
                     key={node.id || node.wordpress_id}
-                    title={<Highlighter
-                        highlightClassName="highlight-search-result"
-                        searchWords={searchString.split(' ')}
-                        autoEscape={true}
-                        textToHighlight={isBlog ? node.title : node.fullTitle} />}
+                    title={node.title}
                     slug={isBlog ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>
                     {isBlog
                         ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
