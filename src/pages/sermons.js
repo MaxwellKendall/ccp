@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { graphql } from "gatsby"
 import moment from "moment"
 import Img from "gatsby-image"
+import { get } from "lodash"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -12,30 +13,31 @@ import { HighlightedText } from "../helpers/searchHelpers"
 export const SermonExcerpt = ({
   sermon,
   searchString
-}) => (
-  <React.Fragment>
-    {sermon.series && sermon.series.title && (
+}) => {
+  console.log("sermon", Object.keys(sermon))
+  return (
+    <React.Fragment>
       <strong className="flex justify-center">
-        <HighlightedText text={sermon.series.title} searchString={searchString} />
+        <HighlightedText text={get(sermon, 'series.title', '')} searchString={searchString} />
       </strong>
-    )}
-    <strong className="flex justify-center">
-      <HighlightedText text={sermon.bibleText} searchString={searchString} />
-    </strong>
-    <div className="flex items-center justify-center flex-col md:flex-row py-4">
-      <Img 
-        style={{ height: '50px', width: '50px' }}
-        fluid={{
-          src: sermon.speaker.roundedThumbnailImageURL
-        }} />
-      <strong className="pl-2 text-center md:text-left">
-        <HighlightedText text={sermon.speaker.displayName} searchString={searchString} />
+      <strong className="flex justify-center">
+        <HighlightedText text={get(sermon, 'bibleText', '')} searchString={searchString} />
       </strong>
-    </div>
-    <strong className="flex justify-center">{moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}</strong>
-    <span className="flex justify-center">{`Downloaded ${sermon.downloadCount} times.`}</span>
-  </React.Fragment>
-)
+      <div className="flex items-center justify-center flex-col md:flex-row py-4">
+        <Img 
+          style={{ height: '50px', width: '50px' }}
+          fluid={{
+            src: sermon.speaker.roundedThumbnailImageURL
+          }} />
+        <strong className="pl-2 text-center md:text-left">
+          <HighlightedText text={get(sermon, 'speaker.displayName', '')} searchString={searchString} />
+        </strong>
+      </div>
+      <strong className="flex justify-center">{moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}</strong>
+      <span className="flex justify-center">{`Downloaded ${sermon.downloadCount} times.`}</span>
+    </React.Fragment>
+  )
+}
 
 export default ({ data }) => {
   const [endIndex, setEndIndex, handleScroll] = useInfiniteScroll(100)
