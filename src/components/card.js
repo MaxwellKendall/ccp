@@ -9,7 +9,7 @@ const Card = ({
   children,
   slug,
   classNames,
-  searchString
+  searchString = null
 }) => {
   const parsedTitle = slug.includes('blog')
     ? removeHTMLAndUnicode(title)
@@ -19,7 +19,10 @@ const Card = ({
     <Link className={`w-full md:w-5/6 max-w-4xl mx-4 no-underline ${classNames}`} to={`/${slug}`}>
       <div className="ccp-card__container mb-5 mx-auto w-full bg-white hover:bg-white shadow-lg rounded px-5 py-10">
         <h2 className="text-center">
-          <HighlightedText searchString={searchString} text={parsedTitle} />
+          {searchString !== null && (
+            <HighlightedText searchString={searchString} text={parsedTitle} />
+          )}
+          {title}
         </h2>
         {children}
       </div>
