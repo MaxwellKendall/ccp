@@ -7,19 +7,30 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import SearchResults from "../components/searchResults"
 import { useInfiniteScroll } from "../helpers/hooks"
+import { HighlightedText } from "../helpers/searchHelpers"
 
-export const SermonExcerpt = 
-({ sermon }) => (
+export const SermonExcerpt = ({
+  sermon,
+  searchString
+}) => (
   <React.Fragment>
-    {sermon.series && sermon.series.title && <strong className="flex justify-center">{sermon.series.title}</strong>}
-    <strong className="flex justify-center">{sermon.bibleText}</strong>
+    {sermon.series && sermon.series.title && (
+      <strong className="flex justify-center">
+        <HighlightedText text={sermon.series.title} searchString={searchString} />
+      </strong>
+    )}
+    <strong className="flex justify-center">
+      <HighlightedText text={sermon.bibleText} searchString={searchString} />
+    </strong>
     <div className="flex items-center justify-center flex-col md:flex-row py-4">
       <Img 
         style={{ height: '50px', width: '50px' }}
         fluid={{
           src: sermon.speaker.roundedThumbnailImageURL
         }} />
-      <strong className="pl-2 text-center md:text-left">{sermon.speaker.displayName}</strong>
+      <strong className="pl-2 text-center md:text-left">
+        <HighlightedText text={sermon.speaker.displayName} searchString={searchString} />
+      </strong>
     </div>
     <strong className="flex justify-center">{moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}</strong>
     <span className="flex justify-center">{`Downloaded ${sermon.downloadCount} times.`}</span>

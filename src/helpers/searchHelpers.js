@@ -1,4 +1,17 @@
+import React from 'react'
 import { get } from "lodash"
+import Highlighter from "react-highlight-words"
+
+export const HighlightedText = ({
+  searchString,
+  text
+}) => (
+  <Highlighter
+    highlightClassName="highlight-search-result"
+    searchWords={searchString.split(' ')}
+    autoEscape={true}
+    textToHighlight={text} />
+)
 
 export const isBlogPost = (node) => {
     return Object.keys(node).includes("wordpress_id")

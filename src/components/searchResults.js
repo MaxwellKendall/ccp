@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { slice, get } from "lodash"
-import Highlighter from "react-highlight-words";
 
 import Card from "./card"
 import SearchInput from "./searchInput"
 import { SermonExcerpt } from "../pages/sermons"
 
-import { isBlogPost, isMatchingResult } from "../helpers/searchHelpers"
-import search from "../pages/search"
+import { isBlogPost, isMatchingResult, HighlightedText } from "../helpers/searchHelpers"
+import { removeHTMLAndUnicode } from "../helpers/regexHelper"
 
 export default ({
   data,
@@ -49,15 +48,18 @@ export default ({
         {slice(results, 0, endIndex)
             .map(({ node }) => {
               const isBlog = isBlogPost(node)
-              console.log("node", node)
+              const parsedExcerpt = isBlog
+                ? removeHTMLAndUnicode(node.excerpt)
+                : ''
               return (
                 <Card
                     key={node.id || node.wordpress_id}
-                    title={node.title}
+                    title={isBlog ? node.title : node.fullTitle}
+                    searchString={searchString}
                     slug={isBlog ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>
                     {isBlog
-                        ? <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-                        : <SermonExcerpt sermon={node} />}
+                        ? <p><HighlightedText text={parsedExcerpt} searchString={searchString} /></p>
+                        : <SermonExcerpt searchString={searchString} sermon={node} />}
                 </Card>
               );
             }) 
