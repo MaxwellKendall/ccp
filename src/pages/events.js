@@ -22,6 +22,9 @@ const getClassByEventSummary = (event, selectedDate) => {
   return 'ccp-event';
 };
 
+export const getDate = (event) => `${moment(event.start.dateTime).format('dddd MMMM Do, YYYY')}`;
+export const isLordsDay = (date) => date.includes('Sunday');
+
 const loading = () => <p>Loading...</p>
 
 const Calendar = Loadable({
@@ -29,7 +32,40 @@ const Calendar = Loadable({
   loading
 })
 
-export default ({ data }) => {
+export const EventExcerpt = ({
+  summary,
+  slug,
+  description,
+  location,
+  start,
+  end,
+  attachments
+}) => {
+  const startAndEndTime = `${moment(start.dateTime).format("hh:mm A")} - ${moment(
+    end.dateTime
+  ).format("hh:mm A")}`
+  const duration = moment.duration(moment(end.dateTime).diff(moment(start.dateTime))).humanize()
+  return (
+    <div>
+      <div className="py-4 flex items-center justify-start">
+        <h3 className="m-0">{summary}</h3>
+      </div>
+      <p>{location}</p>
+      <p>{`${startAndEndTime} (approximately ${duration})`}</p>
+      <p>{description}</p>
+      <div className="map" id={`${slug}`} />
+      {attachments && (
+        attachments.map((attachment) => {
+          return <a href={attachment.fileUrl}>{attachment.title}</a>
+        })
+      )}
+    </div>
+  )
+}
+
+export default ({
+  data
+}) => {
   const [selectedDate, updateSelectedDate] = useState(moment().format('MM-DD-YYYY'))
 
   const handleEventClick = (args) => {
@@ -75,25 +111,11 @@ export default ({ data }) => {
         events={events} /> */}
       <SEO title="Christ Church Presbyterian Events" />
       {data.allGoogleCalendarEvent.edges.map(edge => {
-        const event = edge.node
-        const startAndEndTime = `${moment(event.start.dateTime).format("hh:mm A")} - ${moment(
-          event.end.dateTime
-        ).format("hh:mm A")}`
-        const duration = moment.duration(moment(event.end.dateTime).diff(moment(event.start.dateTime))).humanize()
-        const date = `${moment(event.start.dateTime).format('dddd MMMM Do, YYYY')}`
-        const isLordsDay = date.includes('Sunday');
-
+        const date = getDate(edge.node);
+        const isSabbath = isLordsDay(date);        
         return (
-          <Card slug={`events/${event.slug}`} title={date} className={cx({ 'is-lords-day': isLordsDay })}>
-            <div>
-              <div className="py-4 flex items-center justify-start">
-                <h3 className="m-0">{event.summary}</h3>
-              </div>
-              <p>{event.location}</p>
-              <p>{`${startAndEndTime} (approximately ${duration})`}</p>
-              <p>{event.description}</p>
-              <div className="map" id={`${event.slug}`} />
-            </div>
+          <Card isSearchEnabled={false} slug={`events/${edge.node.slug}`} title={date} className={cx({ 'is-lords-day': isSabbath })}>
+            <EventExcerpt {...edge.node} />
           </Card>
         )
       })}

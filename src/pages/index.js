@@ -9,6 +9,7 @@ import SEO from "../components/seo"
 import Carousel from "../components/carousel"
 import Card from "../components/card"
 import { SermonExcerpt } from "./sermons"
+import { EventExcerpt, getDate, isLordsDay } from "./events"
 
 const subMenu = ["Upcoming Events", "Recent Sermons", "Recent Articles"]
 
@@ -21,26 +22,27 @@ const ActiveSection = ({ section, data }) => {
     return data.upcomingEvents.edges
       .filter(({ node }) => filterEvents(node))
       .slice(0, 5)
-      .map(({ node }) => (
-          <Card slug={`events/${node.slug}`} title={node.summary} key={node.id}>
-            <>
-              <p>{node.description}</p>
-              <p>{node.location}</p>
-              {node.attachments && (
-                node.attachments.map((attachment) => {
-                  return <a href={attachment.fileUrl}>{attachment.title}</a>
-                })
-              )}
-            </>
+      .map(({ node }) => {
+        const date = getDate(node);
+        const isSabbath = isLordsDay(date);
+        console.log("YO", isSabbath)
+        return (
+          <Card
+            slug={`events/${node.slug}`}
+            classNames={cx({ 'is-lords-day': isSabbath })}
+            title={date}
+            key={node.id}
+            isSearchEnabled={false}>
+            <EventExcerpt {...node} />
           </Card>
-    ))
+        )})
   }
   else if (section === "recentSermons") {
     return data.recentSermons.edges
       .map(({ node }) => {
         return (
-          <Card slug={`sermons/${node.slug}`} key={node.id} title={node.fullTitle}>
-            <SermonExcerpt sermon={node} />
+          <Card isSearchEnabled={false} slug={`sermons/${node.slug}`} key={node.id} title={node.fullTitle}>
+            <SermonExcerpt sermon={node} searchString='' />
           </Card>
         )
       })
@@ -48,7 +50,7 @@ const ActiveSection = ({ section, data }) => {
   else if (section === "recentArticles") {
     return data.recentBlogPosts.edges
       .map(({ node }) => (
-        <Card slug={`blog/${node.slug}`} title={node.title}>
+        <Card isSearchEnabled={false} slug={`blog/${node.slug}`} title={node.title} isSearchEnabled={false}>
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
         </Card>
       ))
@@ -119,7 +121,9 @@ export const pageQuery = graphql`
           summary
           description
           start {
-            date
+            dateTime
+          }
+          end {
             dateTime
           }
           id
