@@ -14,27 +14,34 @@ export const SermonExcerpt = ({
   sermon,
   searchString
 }) => {
-  console.log("sermon", Object.keys(sermon))
+  const {
+    bibleText,
+    speaker,
+    preachDate,
+    downloadCount
+  } = sermon;
   return (
     <React.Fragment>
       <strong className="flex justify-center">
         <HighlightedText text={get(sermon, 'series.title', '')} searchString={searchString} />
       </strong>
-      <strong className="flex justify-center">
-        <HighlightedText text={get(sermon, 'bibleText', '')} searchString={searchString} />
-      </strong>
+      {bibleText && (
+        <strong className="flex justify-center">
+          <HighlightedText text={bibleText} searchString={searchString} />
+        </strong>
+      )}
       <div className="flex items-center justify-center flex-col md:flex-row py-4">
         <Img 
           style={{ height: '50px', width: '50px' }}
           fluid={{
-            src: sermon.speaker.roundedThumbnailImageURL
+            src: speaker.roundedThumbnailImageURL
           }} />
         <strong className="pl-2 text-center md:text-left">
-          <HighlightedText text={get(sermon, 'speaker.displayName', '')} searchString={searchString} />
+          <HighlightedText text={speaker.displayName} searchString={searchString} />
         </strong>
       </div>
-      <strong className="flex justify-center">{moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}</strong>
-      <span className="flex justify-center">{`Downloaded ${sermon.downloadCount} times.`}</span>
+      <strong className="flex justify-center">{moment(preachDate).format('dddd MMMM Do, YYYY')}</strong>
+      <span className="flex justify-center">{`Downloaded ${downloadCount} times.`}</span>
     </React.Fragment>
   )
 }
