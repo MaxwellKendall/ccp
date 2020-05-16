@@ -74,7 +74,10 @@ const processEvents = (event, fieldsToInclude) => {
                     [key]: event[key]
                 };
             }
-            return acc;
+            return {
+                ...acc,
+                [key]: null
+            };
         }, {});
 };
 
@@ -137,7 +140,6 @@ exports.sourceNodes = async ({ actions }, options = defaultOptions) => {
         const locationData = {};
         events
             .reduce((prevPromise, event, i, arr) => {
-                console.log("event", event);
                 if (!event.location) return Promise.resolve();
                 const eventLocationString = parseEventCoordinateString(event.location);
                 return prevPromise
