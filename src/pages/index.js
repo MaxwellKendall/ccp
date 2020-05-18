@@ -25,7 +25,6 @@ const ActiveSection = ({ section, data }) => {
       .map(({ node }) => {
         const date = getDate(node);
         const isSabbath = isLordsDay(date);
-        console.log("YO", isSabbath)
         return (
           <Card
             slug={`events/${node.slug}`}
@@ -70,7 +69,7 @@ export default ({ data }) => {
         <ul className="m-0 flex items-center justify-center home-page__subnav">
           {subMenu.map((item, i) => (
             <li
-              className={`rounded cursor-pointer px-4 py-2 text-center font-semibold md:px-8 md:py-4 md:h-16 m-0 ${cx({ 'active': activeTab === camelCase(item)})}`}
+              className={`rounded cursor-pointer px-4 py-2 text-center font-semibold md:px-8 md:py-4 md:h-20 m-0 ${cx({ 'active': activeTab === camelCase(item)})}`}
               onClick={setActiveTab.bind(null, camelCase(item))}
               key={i}>
                 {item}

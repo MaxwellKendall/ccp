@@ -15,18 +15,39 @@
 @font-face {
   font-family: 'Proforma';
   src: url('../../fonts/Proforma-Regular+.otf');
-  src: url('../../fonts/Proforma-Bold+.otf');
-  src: url('../../fonts/Proforma-Italic.otf');
-  src: url('../../fonts/Proforma-BoldItalic+.otf');
+  // src: url('../../fonts/Proforma-Bold+.otf');
+  // src: url('../../fonts/Proforma-Italic.otf');
+  // src: url('../../fonts/Proforma-BoldItalic+.otf');
 }
 
 html {
-    font-family: Proforma georgia, serif;
+    font-family: "Proforma", "georgia", "serif";
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     height: 100%;
     // using rems
     font-size: 10px;
+    p, span, li, strong, input {
+      font-size: 1.6rem;
+    }
+    h1 {
+      font-size: 3.2rem;
+      span {
+        font-size: 100%;
+      }
+    }
+    h2 {
+      font-size: 2.5rem;
+      span {
+        font-size: 100%;
+      }
+    }
+    h3 {
+      font-size: 2.25rem;
+      span {
+        font-size: 100%;
+      }
+    }
 }
 
   body {
@@ -112,6 +133,17 @@ html {
           height: 8px;
           width: 12px;
         }
+      }
+    }
+    .ccp-card__container {
+      h2 {
+        font-size: 3.5rem;
+      }
+      h3 {
+        font-size: 3rem;
+      }
+      p {
+        // font-size: 2rem;
       }
     }
     // III. FOOTER
