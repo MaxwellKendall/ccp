@@ -1,7 +1,11 @@
 .ccp-blog__container {
   max-width: 97rem;
+  h1 {
+    font-family: "Miller Display";
+  }
   .ccp-blog__content {
     // general paragraphs
+    font-family: "Proforma";
       p {
           padding: 1.6rem 0rem;
           // font-size: 20px;
