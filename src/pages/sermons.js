@@ -51,7 +51,7 @@ export default ({ data }) => {
   const [searchString, setSearchString] = useState('')
 
   return (
-    <Layout classNames="mx-auto flex flex-col py-10 px-5 min-h-full my-2" onScroll={handleScroll}>
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 my-2" onScroll={handleScroll}>
       <SEO title="Christ Church Presbyterian Sermons" />
       <h1 className="text-center my-4">Sermons</h1>
       <SearchResults

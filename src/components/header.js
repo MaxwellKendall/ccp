@@ -63,7 +63,7 @@ const Header = React.forwardRef(({ siteDescription, headerHeight }, ref) => {
       <ul style={{ marginTop: headerHeight, width: '310px' }} className={cx(`ccp-nav flex flex-col text-center flex-center items-center overflow-y-scroll`, { 'show-nav': isNavVisible })}>
         <li className="cursor-pointer mb-8 mt-4"><span className="my-0 flex text-white text-center italic">{siteDescription}</span></li>
         <li className="cursor-pointer py-6 w-full border-white my-0">
-          <SearchInput submitSearch={submitSearch} />
+          <SearchInput submitSearch={submitSearch} classNames="w-3/4"/>
         </li>
         {data.site.siteMetadata.links.map((link) => (
           <li className="cursor-pointer py-6 w-3/4 border-white my-0">

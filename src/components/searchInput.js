@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import { debounce } from "lodash"
+import React, { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 
@@ -8,7 +7,7 @@ const searchPlaceholder = "Sermons / Blogs"
 const SearchInput = ({
     submitSearch,
     placeHolder = searchPlaceholder,
-    classNames,
+    classNames = 'w-full',
     submitOnType = false,
     initialSearchString = ""
 }) => {
@@ -24,7 +23,7 @@ const SearchInput = ({
   
   const handleSearch = (e) => {
     e.preventDefault()
-    if(e.keyCode === 13) {
+    if(e.keyCode === 13 || e.keyCode === 8) {
       handleSubmit()
     }
   }
@@ -33,7 +32,7 @@ const SearchInput = ({
     e.preventDefault()
     setSearchString(e.target.value)
     if (submitOnType) {
-      debounce((value) => handleSubmit(value), 250)(e.target.value);
+      handleSubmit();
     }
   }
   

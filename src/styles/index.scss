@@ -163,6 +163,14 @@ html {
         // border: 1px solid blue;
       }
     }
+
+    // IV. Sermon Page
+    .audio-player {
+      height: 300px;
+      @include for-phone-only {
+        height: 260px;
+      }
+    }
   }
 }
   
