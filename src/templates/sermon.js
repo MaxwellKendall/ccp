@@ -9,13 +9,12 @@ export default ({ data }) => {
   const audioAsset = sermon.media.audio[0].downloadURL
   return (
     <Layout classNames="mx-auto flex flex-col py-10 px-5 h-full">
-      <div className="md:py-4 text-center">
+      <div className="md:py-4 text-center h-full">
         <h1>{sermon.fullTitle}</h1>
-        <h2>From the Series, {sermon?.series?.title}</h2>
+        <h2>from the sermon series, {sermon?.series?.title}</h2>
         <h2>{`${sermon.speaker.displayName}, ${moment(sermon.preachDate).format('dddd MMMM Do, YYYY')}`}</h2>
         <p>{sermon.bibleText}</p>
-        <p>Download Count: {sermon.downloadCount} </p>
-        <div className="relative">
+        <p>Downloaded {sermon.downloadCount} times</p>
           <Player
             className="audio-player"
             controls
@@ -23,8 +22,7 @@ export default ({ data }) => {
             url={audioAsset}
             width="100%"
             height=""
-            style={{ position: 'relative', top: 0, left: 0, background: `url(${sermon.speaker.roundedThumbnailImageURL}) no-repeat center`}}/>
-        </div>
+            style={{ background: `url(${sermon.speaker.roundedThumbnailImageURL}) no-repeat center`}}/>
       </div>
     </Layout>
   )
