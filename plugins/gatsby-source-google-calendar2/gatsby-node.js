@@ -65,7 +65,10 @@ const getSlug = (event) => {
     return `${date}/${summary}`;
 };
 
-const processEvents = (event, fieldsToInclude) => {
+const processEventObj = (event, fieldsToInclude) => {
+    const objWithNullFields = fieldsToInclude
+        .filter((key) => !Object.keys(event).includes(key))
+        .reduce((obj, nullField) => ({ ...obj, [nullField]: event.status }), {});
     return Object.keys(event)
         .reduce((acc, key) => {
             if (fieldsToInclude.concat(requiredFields).includes(key)) {
@@ -76,9 +79,9 @@ const processEvents = (event, fieldsToInclude) => {
             }
             return {
                 ...acc,
-                [key]: null
+                [key]: event.status
             };
-        }, {});
+        }, objWithNullFields);
 };
 
 const getAuth = (options) => {
@@ -98,7 +101,8 @@ exports.sourceNodes = async ({ actions }, options = defaultOptions) => {
         timeMax,
         timeMin,
         geoCodeApiKey,
-        scopes } = { ...defaultOptions, ...options };
+        scopes
+    } = { ...defaultOptions, ...options };
     
     // setting the general auth property for client
     const token = new google.auth.JWT(
@@ -193,7 +197,11 @@ exports.sourceNodes = async ({ actions }, options = defaultOptions) => {
                         }
                     };
                 })
-                .forEach(event => createNode(processEvents(event, includedFields)))
+                .forEach(event => {
+                    const eventObj = processEventObj(event, includedFields);
+                    console.log('eventObj', eventObj);
+                    createNode(eventObj);
+                })
         })
   
     // We're done, return.
