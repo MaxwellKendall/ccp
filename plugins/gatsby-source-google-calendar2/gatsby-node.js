@@ -66,9 +66,6 @@ const getSlug = (event) => {
 };
 
 const processEventObj = (event, fieldsToInclude) => {
-    const objWithNullFields = fieldsToInclude
-        .filter((key) => !Object.keys(event).includes(key))
-        .reduce((obj, nullField) => ({ ...obj, [nullField]: event.status }), {});
     return Object.keys(event)
         .reduce((acc, key) => {
             if (fieldsToInclude.concat(requiredFields).includes(key)) {
@@ -77,11 +74,8 @@ const processEventObj = (event, fieldsToInclude) => {
                     [key]: event[key]
                 };
             }
-            return {
-                ...acc,
-                [key]: event.status
-            };
-        }, objWithNullFields);
+            return acc;
+        }, {});
 };
 
 const getAuth = (options) => {
@@ -206,4 +200,42 @@ exports.sourceNodes = async ({ actions }, options = defaultOptions) => {
   
     // We're done, return.
     return
+};
+
+exports.createSchemaCustomization = ({ actions }) => {
+    const { createTypes } = actions;
+
+    createTypes(`
+        type EventAttachment implements Node {
+            fileUrl: String
+            title: String
+        }
+        type EventTime implements Node {
+            date: Date,
+            dateTime: Date,
+            timeZone: String
+        }
+         type EventCoordinates implements Node {
+            lat: Float
+            long: Float
+        }
+        type GoogleCalendarEvent implements Node {
+            id: ID
+            name: String
+            slug: String
+            status: String
+            start: EventTime
+            end: EventTime
+            summary: String
+            status: String
+            organizer: String
+            description: String
+            location: String
+            attachments: [EventAttachment]
+            geoCoordinates: EventCoordinates
+            admin: Boolean
+            created: Date
+            photo: File
+        }
+  `)
 };

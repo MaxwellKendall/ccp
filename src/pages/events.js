@@ -44,7 +44,8 @@ export const EventExcerpt = ({
   const startAndEndTime = `${moment(start.dateTime).format("hh:mm A")} - ${moment(
     end.dateTime
   ).format("hh:mm A")}`
-  const duration = moment.duration(moment(end.dateTime).diff(moment(start.dateTime))).humanize()
+  const duration = moment.duration(moment(end.dateTime).diff(moment(start.dateTime))).humanize();
+  console.log('attachments', attachments);
   return (
     <div>
       <div className="py-4 flex items-center justify-start">
@@ -56,7 +57,7 @@ export const EventExcerpt = ({
       <div className="map" id={`${slug}`} />
       {attachments && (
         attachments.map((attachment) => {
-          return <a href={attachment.fileUrl}>{attachment.title}</a>
+          return <a href={attachment.fileUrl}>Event Details</a>
         })
       )}
     </div>
