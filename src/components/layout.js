@@ -25,7 +25,7 @@ const Layout = ({ onScroll, children, classNames = '' }) => {
           description
         }
       }
-      footerImg: file(relativePath: {eq: "ccp_favicon.png"}) {
+      footerImg: file(relativePath: {eq: "ccp_favicon.jpg"}) {
         childImageSharp {
           fluid(maxWidth: 150, quality: 100) {
             ...GatsbyImageSharpFluid
