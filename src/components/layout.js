@@ -53,10 +53,10 @@ const Layout = ({ onScroll, children, classNames = '' }) => {
   return (
     <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`h-full bg-gray-200 flex flex-col`}>
       <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
-        <main style={{ paddingTop: `${headerHeight}px` }} className={`flex-grow flex items-center flex-col justify-center md:justify-start ${classNames} `}>
+        <main style={{ paddingTop: `${headerHeight}px` }} className={`flex-grow flex flex-shrink-0 items-center flex-col justify-center md:justify-start ${classNames} `}>
           {children}
         </main>
-        <footer className="flex items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">
+        <footer className="flex mt-auto items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">
           <div className="flex px-8 items-center justify-center md:justify-start md:w-1/3">
             <div className="md:w-auto">
               <a href="https://www.facebook.com/christchurchcharleston" className="mr-2"><FontAwesomeIcon icon={faFacebook} color="white" size="lg" /></a>

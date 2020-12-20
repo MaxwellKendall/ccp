@@ -57,7 +57,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf public && gatsby build",
-    "develop": "rm -rf src/drive && gatsby develop",
+    "develop": "gatsby develop --host 0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
