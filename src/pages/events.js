@@ -105,7 +105,7 @@ export default ({
   // }, [])
   
   return (
-    <Layout classNames="mx-auto flex flex-col py-10 px-5 my-2">
+    <Layout classNames="mx-auto flex flex-col py-10 px-5 my-2 md:flex-row md:justify-center md:items-start md:flex-wrap">
       {/* <Calendar
         dateClick={handleDateClick}
         eventClick={handleEventClick}
