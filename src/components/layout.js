@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { throttle } from "lodash"
@@ -17,6 +17,7 @@ import Img from "gatsby-image"
 import "../styles/index.scss"
 
 const Layout = ({ onScroll, children, classNames = '' }) => {
+  const headerRef = useRef();
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -36,24 +37,24 @@ const Layout = ({ onScroll, children, classNames = '' }) => {
   `)
 
   const [headerHeight, setHeaderHeight] = useState(0)
-  const [ref, setRef] = useState(null)
   const measuredRef = useCallback(node => {
-    if (node !== null) {
-      setRef(node)
-      setHeaderHeight(node.getBoundingClientRect().height)
+    if (node.current) {
+      console.log('header-height', node.current.getBoundingClientRect().height);
+      setHeaderHeight(node.current.getBoundingClientRect().height)
     }
   }, [])
 
   useEffect(() => {
-   window.addEventListener('resize', throttle(() => measuredRef(ref), 100))
-   
-   return () => window.removeEventListener('resize', null)
-  }, [measuredRef, ref])
+    measuredRef(headerRef);
+    window.addEventListener('resize', throttle(() => measuredRef(headerRef), 100))
+
+    return () => window.removeEventListener('resize', null)
+  }, [])
 
   return (
     <div onScroll={onScroll} style={{ overflow: 'auto' }} className={`h-full bg-gray-200 flex flex-col`}>
-      <Header ref={measuredRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
-        <main style={{ paddingTop: `${headerHeight}px` }} className={`flex-grow flex flex-shrink-0 items-center flex-col justify-center md:justify-start ${classNames} `}>
+      <Header ref={headerRef} headerHeight={headerHeight} siteDescription={data.site.siteMetadata.description} />
+        <main style={{ marginTop: `${headerHeight}px` }} className={`px-2 py-5 md:px-5 flex-grow flex flex-shrink-0 items-center flex-col justify-center md:justify-start ${classNames}`}>
           {children}
         </main>
         <footer className="flex mt-auto items-center flex-col md:flex-row justify-center flex-shrink-0 py-4 px-2">

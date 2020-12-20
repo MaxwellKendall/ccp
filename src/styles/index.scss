@@ -99,15 +99,6 @@ html {
       li {
         color: rgb(32,83,114)
       }
-      li:nth-of-type(1) .active {
-        // border-radius-:
-      }
-      li:nth-of-type(2) .active {
-        // border-radius:
-      }
-      li:nth-of-type(3) .active {
-        // border-radius:
-      }
       .active {
         background-color: #fff;
         color: rgb(32,83,114);
@@ -115,6 +106,36 @@ html {
         border-bottom-color: #fff;
         position: relative;
         box-shadow: -2px 0 2px -2px rgba(0,0,0,.3), 2px 0 2px -3px rgba(0,0,0,.3);
+      }
+      li:nth-of-type(1).active {
+        @include for-tablet-portrait-up {
+          &:before {
+            left: -.5rem;
+            border-bottom-right-radius: 1rem;
+            border-right: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            box-shadow: 4px 4px 0 4px #fff;
+            position: absolute;
+            bottom: -2px;
+            width: 0.5rem;
+            height: 0.5rem;
+            content: " ";
+          }
+        }
+        &:after {
+          content: " ";
+          position: absolute;
+          right: -12px;
+          border-bottom-left-radius: 6.5rem;
+          bottom: -2.25px;
+          border-left: 1px solid #fff;
+          border-bottom: 1px solid #fff;
+          box-shadow: -4px 4px 0 4px #fff;
+          height: 8px;
+          width: 12px;
+        }
+      }
+      li:nth-of-type(2).active {
         &:before {
           left: -.5rem;
           border-bottom-right-radius: 1rem;
@@ -138,6 +159,34 @@ html {
           box-shadow: -4px 4px 0 4px #fff;
           height: 8px;
           width: 12px;
+        }
+      }
+      li:nth-of-type(3).active {
+        &:before {
+          left: -.5rem;
+          border-bottom-right-radius: 1rem;
+          border-right: 1px solid #fff;
+          border-bottom: 1px solid #fff;
+          box-shadow: 4px 4px 0 4px #fff;
+          position: absolute;
+          bottom: -2px;
+          width: 0.5rem;
+          height: 0.5rem;
+          content: " ";
+        }
+        @include for-tablet-portrait-up {
+          &:after {
+            content: " ";
+            position: absolute;
+            right: -12px;
+            border-bottom-left-radius: 6.5rem;
+            bottom: -2.25px;
+            border-left: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            box-shadow: -4px 4px 0 4px #fff;
+            height: 8px;
+            width: 12px;
+          }
         }
       }
     }

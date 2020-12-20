@@ -61,7 +61,7 @@ export default ({ data }) => {
   const [activeTab, setActiveTab] = useState(camelCase(subMenu[0]))
 
   return (
-    <Layout>
+    <Layout classNames='pt-0 px-0'>
       <SEO title="Home" />
       <Carousel
         data={data.images}
