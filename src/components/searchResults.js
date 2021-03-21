@@ -33,7 +33,7 @@ export default ({
   }, [setResults, data, searchString, setEndIndex])
 
   const submitSearch = (str) => setSearchString(str)
-
+  console.log('results', data)
   return (
       <>
         <div className="flex justify-center w-11/12 md:w-1/2 pb-4">
@@ -53,7 +53,7 @@ export default ({
                 : ''
               return (
                 <Card
-                    key={node.id || node.wordpress_id}
+                    key={node.id}
                     title={isBlog ? node.title : node.fullTitle}
                     searchString={searchString}
                     slug={isBlog ? `blog/${node.slug}/` : `sermons/${node.slug}/`}>

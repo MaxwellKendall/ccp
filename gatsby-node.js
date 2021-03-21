@@ -6,7 +6,7 @@ exports.createPages = ({ graphql, actions }) => {
   // create blog post pages
   return graphql(`
     {
-      allWordpressPost(sort: { fields: [date] }) {
+      allWpPost(sort: { fields: [date] }) {
         edges {
           node {
             title
@@ -64,7 +64,7 @@ exports.createPages = ({ graphql, actions }) => {
     }
   `)
     .then(result => {
-      result.data.allWordpressPost.edges.forEach(({ node }) => {
+      result.data.allWpPost.edges.forEach(({ node }) => {
         createPage({
           path: `blog/${node.slug}`,
           component: path.resolve(`./src/templates/blog-post.js`),

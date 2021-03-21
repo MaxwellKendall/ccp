@@ -96,11 +96,11 @@ export const pageQuery = graphql`
         }
       }
     }
-    recentBlogPosts: allWordpressPost(limit: 4, sort: {fields: date, order: DESC}) {
+    recentBlogPosts: allWpPost(limit: 4, sort: {fields: date, order: DESC}) {
       edges {
         node {
           ...BlogPostOverview
-          wordpress_id
+          id
         }
       }
     }
