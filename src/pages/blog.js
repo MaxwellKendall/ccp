@@ -28,15 +28,16 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: { fields: [date] }) {
+    allWordpressPost: allWpPost(sort: { fields: [date] }) {
       edges {
         node {
+          id
           title
           excerpt
           slug
-          wordpress_id
+          date(formatString: "MMMM DD, YYYY")
         }
       }
     }
-  }
+}
 `

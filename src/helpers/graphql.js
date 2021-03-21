@@ -1,3 +1,5 @@
+import { graphql } from 'gatsby';
+
 export const sermonOveriew = graphql`
   fragment SermonOverview on Sermon {
       fullTitle
@@ -16,7 +18,7 @@ export const sermonOveriew = graphql`
 `
 
 export const blogPostOverview = graphql`
-  fragment BlogPostOverview on wordpress__POST {
+  fragment BlogPostOverview on WpPost {
     date
     excerpt
     slug
