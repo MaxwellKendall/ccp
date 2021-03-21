@@ -14,7 +14,8 @@ export const HighlightedText = ({
 )
 
 export const isBlogPost = (node) => {
-    return Object.keys(node).includes("wordpress_id")
+  console.log('node', node)
+    return Object.keys(node).includes("excerpt")
 }
   
 export const isMatchingResult = (node, searchString) => {

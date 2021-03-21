@@ -34,11 +34,11 @@ export default ({
 
 export const pageQuery = graphql`
   query searchPageQuery {
-    allWordpressPost {
+    allWordpressPost: allWpPost {
         edges {
           node {
             ...BlogPostOverview
-            wordpress_id
+            id
           }
         }
     }

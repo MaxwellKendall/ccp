@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react"
 import moment from "moment"
 import { graphql, navigate, Link } from "gatsby"
-import Loadable from 'react-loadable'
 import cx from 'classnames'
 
 import Layout from "../components/layout"
@@ -26,12 +25,6 @@ export const getDate = (event) => `${moment(event.start.dateTime).format('dddd M
 export const isLordsDay = (date) => date.includes('Sunday');
 
 const loading = () => <p>Loading...</p>
-
-const Calendar = Loadable({
-  loader: () => import("../components/calendar"),
-  loading
-})
-
 export const EventExcerpt = ({
   summary,
   slug,
