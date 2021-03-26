@@ -72,18 +72,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-gdrive-folder2',
-      options: {
-        folderId: GOOGLE_DRIVE_FOLDER_ID,
-        key: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
-        scopes: [
-          'https://www.googleapis.com/auth/drive.file',
-          'https://www.googleapis.com/auth/drive',
-        ]
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-copy-gdrive-folder2',
+      resolve: 'gatsby-plugin-copy-gdrive-folder',
       options: {
         folderId: GOOGLE_DRIVE_FOLDER_ID,
         key: GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
@@ -94,7 +83,7 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-source-google-calendar2`,
+      resolve: `gatsby-source-google-calendar-events`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
         assumedUser: "info@ckendallart.com",
