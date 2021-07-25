@@ -1,41 +1,51 @@
-import React, { useEffect } from "react"
+import React, { useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faExternalLinkAlt, faExternalLinkSquareAlt, faMapMarker } from "@fortawesome/free-solid-svg-icons"
+
 import moment from "moment"
+import { graphql, Link } from "gatsby"
+import GoogleMapReact from 'google-map-react';
+
 import Layout from "../components/layout"
-import { graphql } from "gatsby"
+
+const { GATSBY_GOOGLE_MAPS_KEY } = process.env;
+
+const MapMarker = ({ lat, lng }) => {
+  return (
+    <a className="w-full flex flex-col cursor-pointer" target="_blank" href={`http://www.google.com/maps/place/${lat},${lng}`}>
+      <FontAwesomeIcon icon={faMapMarker} size="lg" color="red" />
+    </a>
+  );
+}
 
 export default ({ data }) => {
   const event = data.allGoogleCalendarEvent.edges[0].node
-  
-  useEffect(() => {
-    const event = data.allGoogleCalendarEvent.edges[0].node
-    const { slug } = event
-    // const { lat, lng } = event.geoCoordinates
-    // const myLatlng = new window.google.maps.LatLng(lat, lng);
-
-    // new window.google.maps.Map(document.getElementById(slug), {
-    //   center: myLatlng,
-    //   zoom: 8
-    // })
-  }, [])
+  const {lat, lng } = event.geoCoordinates;
+  const googleLink = `http://www.google.com/maps/place/${lat},${lng}`;
 
   return (
     <Layout classNames="mx-auto flex flex-col py-10 px-5 h-full">
-      <div className="md:py-4">
+      <div className="md:py-4 min-w-full h-5/6">
         <h1>{event.summary}</h1>
         <h2>
           {`${moment(event.start.dateTime).format("LLLL")} - ${moment(
             event.end.dateTime
           ).format("LT")} (approx.)`}
         </h2>
-        <p>{event.location} </p>
-        <div className="map" id={event.slug} />
-        <p>Status: {event.status} </p>
+        <a href={googleLink} target="_blank" className="text-center">
+          at {event.location}
+          <FontAwesomeIcon className="ml-2" size="sm" icon={faExternalLinkSquareAlt} />
+        </a>
         {event.attachments &&
           event.attachments.map(attachment => (
-            <a
-              href={attachment.fileUrl}
-            >{`Possibly a Bulletin: ${attachment.title}`}</a>
+            <a href={attachment.fileUrl}>{`Possibly a Bulletin: ${attachment.title}`}</a>
           ))}
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: GATSBY_GOOGLE_MAPS_KEY }}
+          defaultCenter={{ lat, lng }}
+          defaultZoom={15}>
+            <MapMarker lat={lat} lng={lng} />
+        </GoogleMapReact>
       </div>
     </Layout>
   )
@@ -46,6 +56,10 @@ export const query = graphql`
       edges {
         node {
           summary
+          geoCoordinates {
+            lng
+            lat
+          }
           start {
             dateTime
           }
