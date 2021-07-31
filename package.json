@@ -23,7 +23,7 @@
     "gatsby-plugin-sass": "^4.1.0",
     "gatsby-plugin-sharp": "^3.1.1",
     "gatsby-source-filesystem": "^2.1.40",
-    "gatsby-source-google-calendar-events": "^0.3.1",
+    "gatsby-source-google-calendar-events": "^0.3.4",
     "gatsby-source-sermon-audio": "^0.1.6",
     "gatsby-source-wordpress": "^5.1.0",
     "gatsby-transformer-remark": "^3.1.0",
