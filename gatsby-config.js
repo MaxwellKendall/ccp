@@ -7,7 +7,9 @@ const {
   GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
   SERMON_AUDIO_API_KEY,
   GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY,
-  GOOGLE_DRIVE_FOLDER_ID
+  GOOGLE_DRIVE_FOLDER_ID,
+  GOOGLE_CALENDAR_ID,
+  GOOGLE_CALENDAR_ASSUMED_USER
 } = process.env
 
 module.exports = {
@@ -86,7 +88,7 @@ module.exports = {
       resolve: `gatsby-source-google-calendar-events`,
       options: {
         envVar: GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY,
-        assumedUser: "info@ckendallart.com",
+        assumedUser: GOOGLE_CALENDAR_ASSUMED_USER,
         includedFields: [
           "start",
           "end",
@@ -99,8 +101,7 @@ module.exports = {
           "attachments",
           "geoCoordinates"
         ],
-        calendarId:
-          "ckendallart.com_kgegbfntrrqihkb5k2rqu1pouc@group.calendar.google.com",
+        calendarId: GOOGLE_CALENDAR_ID,
         timeMax: moment()
           .add(1, "y")
           .format(),
